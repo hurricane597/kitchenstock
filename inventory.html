@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KitchenStock — Kitchen Inventory</title>
 <style>
-/* ===== RESET ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0f172a;--bg2:#1e293b;--bg3:#263348;
@@ -22,7 +21,7 @@
 }
 body{font-family:var(--font);background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;line-height:1.5}
 
-/* ===== LOGIN ===== */
+/* LOGIN */
 .login-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:1000}
 .login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:40px 36px;width:100%;max-width:420px;box-shadow:var(--shadow)}
 .login-brand{display:flex;align-items:center;gap:14px;margin-bottom:6px}
@@ -37,7 +36,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--tx);min-height:100
 .hint-text{margin-top:14px;font-size:12px;color:var(--tx3);text-align:center}
 .code-hint{background:var(--bg3);padding:2px 8px;border-radius:4px;font-family:monospace;color:var(--green);font-size:13px}
 
-/* ===== FORM ELEMENTS ===== */
+/* FORM */
 .form-group{display:flex;flex-direction:column;gap:6px;flex:1}
 .form-group label{font-size:11px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px}
 .req{color:var(--red)}
@@ -48,27 +47,22 @@ select option{background:var(--bg2)}
 textarea{resize:vertical;min-height:64px}
 .divider{border:none;border-top:1px solid var(--border);margin:8px 0}
 
-/* ===== BUTTONS ===== */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid transparent;transition:background .2s,border-color .2s,opacity .2s,transform .1s;white-space:nowrap;user-select:none}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid transparent;transition:background .2s,border-color .2s,transform .1s;white-space:nowrap;user-select:none}
 .btn:active{transform:translateY(1px)}
-.btn-primary{background:var(--green);color:#fff;border-color:var(--green)}
-.btn-primary:hover{background:#0ea572;border-color:#0ea572}
-.btn-outline{background:transparent;color:var(--tx2);border-color:var(--border2)}
-.btn-outline:hover{background:var(--bg3);color:var(--tx)}
-.btn-ghost{background:var(--bg3);color:var(--tx2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--border);color:var(--tx)}
-.btn-danger{background:var(--red);color:#fff;border-color:var(--red)}
-.btn-danger:hover{background:#dc2626}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green)}.btn-primary:hover{background:#0ea572}
+.btn-outline{background:transparent;color:var(--tx2);border-color:var(--border2)}.btn-outline:hover{background:var(--bg3);color:var(--tx)}
+.btn-danger{background:var(--red);color:#fff;border-color:var(--red)}.btn-danger:hover{background:#dc2626}
 .btn-full{width:100%;margin-top:8px}
 .btn-sm{padding:6px 12px;font-size:13px}
 
-/* ===== HEADER ===== */
+/* HEADER */
 .header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .header-left{display:flex;align-items:center;gap:12px}
 .header-title{display:flex;flex-direction:column}
 .header-name{font-size:16px;font-weight:700;letter-spacing:-.3px}
 .header-sub{font-size:11px;color:var(--tx3)}
-.header-right{display:flex;align-items:center;gap:10px}
+.header-right{display:flex;align-items:center;gap:8px}
 .clock{font-size:12px;font-weight:600;color:var(--tx2);font-variant-numeric:tabular-nums;min-width:130px;text-align:right}
 .notif-bell{position:relative;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 10px;cursor:pointer;color:var(--tx2);font-size:13px;font-weight:700;font-family:var(--font);transition:background .2s}
 .notif-bell:hover{background:var(--border)}
@@ -76,7 +70,7 @@ textarea{resize:vertical;min-height:64px}
 .hdr-btn{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 12px;font-size:13px;font-weight:600;font-family:var(--font);color:var(--tx2);cursor:pointer;transition:background .2s,color .2s}
 .hdr-btn:hover{background:var(--border);color:var(--tx)}
 
-/* ===== ALERT BANNER ===== */
+/* ALERT BANNER */
 .alert-banner{background:rgba(239,68,68,.1);border-bottom:2px solid var(--red);padding:10px 24px;display:flex;align-items:center;gap:12px}
 .alert-pulse{width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.5s infinite}
 .alert-content{flex:1;font-size:13px}
@@ -84,13 +78,12 @@ textarea{resize:vertical;min-height:64px}
 .dismiss-btn{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:14px;padding:4px;transition:color .2s}
 .dismiss-btn:hover{color:var(--tx)}
 
-/* ===== MAIN ===== */
+/* MAIN */
 .main-content{padding:24px;max-width:1400px;margin:0 auto}
 
-/* ===== STATS ===== */
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;align-items:center;gap:16px;transition:border-color .2s}
-.stat-card:hover{border-color:var(--border2)}
 .stat-fresh{border-left:3px solid var(--green)}
 .stat-warn{border-left:3px solid var(--yellow)}
 .stat-danger{border-left:3px solid var(--red)}
@@ -103,7 +96,7 @@ textarea{resize:vertical;min-height:64px}
 .stat-value{font-size:28px;font-weight:700;letter-spacing:-1px;line-height:1}
 .stat-label{font-size:11px;color:var(--tx2);margin-top:4px;text-transform:uppercase;letter-spacing:.4px}
 
-/* ===== CONTROLS ===== */
+/* CONTROLS */
 .controls-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .controls-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1}
 .controls-right{display:flex;gap:8px}
@@ -111,8 +104,13 @@ textarea{resize:vertical;min-height:64px}
 .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:13px;pointer-events:none}
 .search-input{padding-left:32px}
 .select-input{min-width:130px;max-width:170px}
+.view-tabs{display:flex;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;flex-shrink:0}
+.view-tab{background:var(--bg3);border:none;color:var(--tx2);padding:7px 16px;font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .2s,color .2s}
+.view-tab.active{background:var(--green);color:#fff}
+.arch-count{display:inline-block;background:var(--border2);color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;font-weight:700;margin-left:4px;vertical-align:middle}
+.view-tab.active .arch-count{background:rgba(255,255,255,.3)}
 
-/* ===== TABLE ===== */
+/* TABLE */
 .table-wrapper{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .inv-table{width:100%;border-collapse:collapse}
 .inv-table thead tr{background:var(--bg3);border-bottom:1px solid var(--border)}
@@ -128,14 +126,17 @@ textarea{resize:vertical;min-height:64px}
 .row-warning{background:rgba(245,158,11,.04)}
 .row-expired:hover{background:rgba(239,68,68,.12)!important}
 .row-critical:hover{background:rgba(249,115,22,.12)!important}
+.row-archived{opacity:.5}
+.row-archived:hover{opacity:.8!important;background:var(--bg3)!important}
 
-/* ===== BADGES ===== */
+/* BADGES */
 .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
 .badge::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .badge-fresh{background:var(--green-bg);color:var(--green)}.badge-fresh::before{background:var(--green)}
 .badge-warning{background:var(--yellow-bg);color:var(--yellow)}.badge-warning::before{background:var(--yellow);animation:pulse 1.5s infinite}
 .badge-critical{background:var(--orange-bg);color:var(--orange)}.badge-critical::before{background:var(--orange);animation:pulse 1s infinite}
 .badge-expired{background:var(--red-bg);color:var(--red)}.badge-expired::before{background:var(--red);animation:pulse .8s infinite}
+.badge-archived{background:var(--bg3);color:var(--tx3);border:1px solid var(--border)}.badge-archived::before{background:var(--tx3)}
 .cat-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:var(--bg3);color:var(--tx2);border:1px solid var(--border)}
 .days-fresh{color:var(--green);font-weight:700}
 .days-warning{color:var(--yellow);font-weight:700}
@@ -144,16 +145,18 @@ textarea{resize:vertical;min-height:64px}
 .action-btns{display:flex;gap:6px}
 .btn-icon{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--tx2);cursor:pointer;font-size:12px;padding:5px 10px;font-family:var(--font);font-weight:600;transition:background .2s,color .2s,border-color .2s}
 .btn-icon:hover{background:var(--border);color:var(--tx)}
+.btn-icon-arch:hover{background:var(--yellow-bg);color:var(--yellow);border-color:var(--yellow)}
 .btn-icon-del:hover{background:var(--red-bg);color:var(--red);border-color:var(--red)}
+.btn-icon-restore:hover{background:var(--green-bg);color:var(--green);border-color:var(--green)}
 .empty-state{padding:60px 24px;text-align:center;color:var(--tx2)}
 .empty-icon{font-size:40px;margin-bottom:16px;opacity:.4}
 .empty-sub{font-size:13px;color:var(--tx3);margin-top:6px}
 .page-footer{margin-top:24px;display:flex;justify-content:space-between;font-size:12px;color:var(--tx3)}
 
-/* ===== MODALS ===== */
+/* MODALS */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:500;padding:20px;animation:fadeIn .2s ease}
 .modal-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:620px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow);animation:slideUp .25s ease}
-.modal-sm{max-width:420px}
+.modal-sm{max-width:440px}
 .modal-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .modal-hdr h3{font-size:17px;font-weight:700}
 .close-btn{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background .2s,color .2s}
@@ -164,7 +167,14 @@ textarea{resize:vertical;min-height:64px}
 .msg-error{color:var(--red);font-size:13px;background:var(--red-bg);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid rgba(239,68,68,.3)}
 .msg-success{color:var(--green);font-size:13px;background:var(--green-bg);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid rgba(16,185,129,.3)}
 
-/* ===== PERIOD PILLS ===== */
+/* REASON OPTIONS */
+.reason-options{display:flex;flex-direction:column;gap:6px}
+.reason-opt{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--tx2);padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);transition:all .2s}
+.reason-opt:hover{border-color:var(--green);color:var(--tx);background:rgba(16,185,129,.05)}
+.reason-opt input[type=radio]{accent-color:var(--green);width:14px;height:14px;flex-shrink:0}
+.reason-opt.selected{border-color:var(--green);background:var(--green-bg);color:var(--tx)}
+
+/* PERIOD PILLS */
 .period-pills{display:flex;gap:6px;flex-wrap:wrap}
 .pill{padding:5px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--bg3);color:var(--tx2);cursor:pointer;font-size:12px;font-family:var(--font);font-weight:600;transition:all .2s}
 .pill:hover{border-color:var(--green);color:var(--green)}
@@ -172,37 +182,33 @@ textarea{resize:vertical;min-height:64px}
 .report-preview{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--tx2)}
 .report-preview strong{color:var(--tx)}
 
-/* ===== TOAST ===== */
+/* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px 20px;font-size:13px;font-weight:600;color:var(--tx);box-shadow:var(--shadow);z-index:9999;animation:slideRight .3s ease;max-width:320px}
 
-/* ===== UTILITY ===== */
+/* UTILITY */
 .hidden{display:none!important}
 .app{height:100vh;display:flex;flex-direction:column;overflow:hidden}
 .main-content{flex:1;overflow-y:auto}
 #printView{display:none}
 
-/* ===== ANIMATIONS ===== */
+/* ANIMATIONS */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes slideRight{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
 @keyframes rowAlarm{0%,100%{border-left:3px solid transparent}50%{border-left:3px solid var(--red)}}
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--tx3)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* ===== RESPONSIVE ===== */
 @media(max-width:960px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.form-row{grid-template-columns:1fr}.main-content{padding:16px}.header{padding:0 16px}.clock{display:none}}
 
-/* ===== PRINT STYLES ===== */
+/* PRINT */
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body>*:not(#printView){display:none!important}
-  #printView{display:block!important;font-family:Arial,sans-serif;color:#1e293b;background:#fff;padding:0;margin:0}
+  #printView{display:block!important;font-family:Arial,sans-serif;color:#1e293b;background:#fff}
   @page{margin:18mm 14mm;size:A4 landscape}
-
-  .pr-wrap{padding:0}
   .pr-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #0f172a;padding-bottom:16px;margin-bottom:20px}
   .pr-brand{display:flex;align-items:center;gap:12px}
   .pr-brand-icon{width:44px;height:44px;background:#10b981;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800}
@@ -210,7 +216,6 @@ textarea{resize:vertical;min-height:64px}
   .pr-brand-text p{font-size:13px;color:#475569;margin:2px 0 0}
   .pr-meta{text-align:right;font-size:11px;color:#475569;line-height:1.9}
   .pr-meta strong{color:#1e293b}
-
   .pr-summary{display:flex;gap:12px;margin-bottom:20px}
   .pr-stat{flex:1;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;text-align:center}
   .pr-stat-val{display:block;font-size:22px;font-weight:700;color:#0f172a;line-height:1}
@@ -219,27 +224,27 @@ textarea{resize:vertical;min-height:64px}
   .pr-stat.s-red{border-color:#ef4444}.pr-stat.s-red .pr-stat-val{color:#991b1b}
   .pr-stat.s-green{border-color:#10b981}.pr-stat.s-green .pr-stat-val{color:#065f46}
   .pr-stat.s-blue{border-color:#3b82f6}.pr-stat.s-blue .pr-stat-val{color:#1e40af}
-
   .pr-table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:20px}
   .pr-table th{background:#0f172a;color:#fff;padding:8px 10px;text-align:left;font-weight:700;text-transform:uppercase;font-size:9px;letter-spacing:.5px}
   .pr-table td{padding:7px 10px;border-bottom:1px solid #e2e8f0;vertical-align:middle}
   .pr-table tbody tr:nth-child(even){background:#f8fafc}
   .pr-table tbody tr:last-child td{border-bottom:none}
   .pr-table tr{page-break-inside:avoid}
-
   .ps-fresh{color:#065f46;font-weight:700}
   .ps-warning{color:#92400e;font-weight:700}
   .ps-critical{color:#9a3412;font-weight:700}
   .ps-expired{color:#991b1b;font-weight:700;background:#fef2f2;padding:2px 6px;border-radius:3px}
-
-  .pr-footer{border-top:1px solid #e2e8f0;padding-top:12px;display:flex;justify-content:space-between;font-size:9px;color:#94a3b8}
+  .ps-used{color:#065f46;font-weight:700}
+  .ps-damaged{color:#9a3412;font-weight:700}
+  .ps-other{color:#475569;font-weight:700}
   .pr-section-title{font-size:13px;font-weight:700;color:#0f172a;border-left:4px solid #10b981;padding-left:10px;margin:0 0 12px}
+  .pr-footer{border-top:1px solid #e2e8f0;padding-top:12px;display:flex;justify-content:space-between;font-size:9px;color:#94a3b8}
 }
 </style>
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div id="loginScreen" class="login-overlay">
   <div class="login-card">
     <div class="login-brand">
@@ -248,7 +253,7 @@ textarea{resize:vertical;min-height:64px}
     </div>
     <p class="login-sub">Head Chef Access Only</p>
     <div class="form-group">
-      <label for="passwordInput">Chef Password</label>
+      <label>Chef Password</label>
       <div class="input-with-toggle">
         <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="current-password"/>
         <button type="button" id="togglePassword" class="toggle-pw">SHOW</button>
@@ -260,7 +265,7 @@ textarea{resize:vertical;min-height:64px}
   </div>
 </div>
 
-<!-- ===== MAIN APP ===== -->
+<!-- APP -->
 <div id="app" class="app hidden">
   <header class="header">
     <div class="header-left">
@@ -273,8 +278,8 @@ textarea{resize:vertical;min-height:64px}
     <div class="header-right">
       <div id="clock" class="clock"></div>
       <button id="notifBell" class="notif-bell" title="Alerts">ALT<span id="notifCount" class="notif-badge hidden">0</span></button>
-      <button class="hdr-btn" id="exportBtn" title="Export data to JSON">Export</button>
-      <button class="hdr-btn" id="importTrigger" title="Import data from JSON">Import</button>
+      <button class="hdr-btn" id="exportBtn">Export</button>
+      <button class="hdr-btn" id="importTrigger">Import</button>
       <input type="file" id="importFile" accept=".json" class="hidden"/>
       <button class="hdr-btn" id="openReportBtn">Report</button>
       <button class="hdr-btn" id="openSettingsBtn">Settings</button>
@@ -292,7 +297,7 @@ textarea{resize:vertical;min-height:64px}
     <section class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon icon-blue">&#9632;</div>
-        <div class="stat-body"><span class="stat-value" id="statTotal">0</span><span class="stat-label">Total Items</span></div>
+        <div class="stat-body"><span class="stat-value" id="statTotal">0</span><span class="stat-label">Active Items</span></div>
       </div>
       <div class="stat-card stat-fresh">
         <div class="stat-icon icon-green">&#9632;</div>
@@ -316,21 +321,15 @@ textarea{resize:vertical;min-height:64px}
         </div>
         <select id="categoryFilter" class="select-input">
           <option value="all">All Categories</option>
-          <option value="Produce">Produce</option>
-          <option value="Dairy">Dairy</option>
-          <option value="Meat">Meat</option>
-          <option value="Seafood">Seafood</option>
-          <option value="Dry Goods">Dry Goods</option>
-          <option value="Beverages">Beverages</option>
-          <option value="Spices">Spices</option>
-          <option value="Other">Other</option>
+          <option value="Produce">Produce</option><option value="Dairy">Dairy</option>
+          <option value="Meat">Meat</option><option value="Seafood">Seafood</option>
+          <option value="Dry Goods">Dry Goods</option><option value="Beverages">Beverages</option>
+          <option value="Spices">Spices</option><option value="Other">Other</option>
         </select>
         <select id="statusFilter" class="select-input">
           <option value="all">All Status</option>
-          <option value="fresh">Fresh</option>
-          <option value="warning">Expiring Soon</option>
-          <option value="critical">Critical</option>
-          <option value="expired">Expired</option>
+          <option value="fresh">Fresh</option><option value="warning">Expiring Soon</option>
+          <option value="critical">Critical</option><option value="expired">Expired</option>
         </select>
         <select id="sortBy" class="select-input">
           <option value="expiry">Sort: Expiry Date</option>
@@ -338,7 +337,12 @@ textarea{resize:vertical;min-height:64px}
           <option value="category">Sort: Category</option>
           <option value="purchase">Sort: Purchased</option>
           <option value="status">Sort: Status</option>
+          <option value="archived">Sort: Archived On</option>
         </select>
+        <div class="view-tabs">
+          <button id="tabActive" class="view-tab active">Active</button>
+          <button id="tabHistory" class="view-tab">History <span id="archCount" class="arch-count">0</span></button>
+        </div>
       </div>
       <div class="controls-right">
         <button id="addItemBtn" class="btn btn-primary">+ Add Item</button>
@@ -351,26 +355,26 @@ textarea{resize:vertical;min-height:64px}
           <tr>
             <th>Item Name</th><th>Category</th><th>Quantity</th>
             <th>Purchased</th><th>Expires</th><th>Age</th>
-            <th>Days Left</th><th>Status</th><th>Actions</th>
+            <th id="thCol7">Days Left</th><th id="thCol8">Status</th><th>Actions</th>
           </tr>
         </thead>
         <tbody id="inventoryBody"></tbody>
       </table>
       <div id="emptyState" class="empty-state hidden">
         <div class="empty-icon">&#128230;</div>
-        <p>No items found.</p>
-        <p class="empty-sub">Add your first inventory item using the button above.</p>
+        <p id="emptyMsg">No items found.</p>
+        <p class="empty-sub" id="emptySub">Add your first inventory item using the button above.</p>
       </div>
     </div>
 
     <footer class="page-footer">
-      <span>KitchenStock v2.0 &mdash; Self-Contained Edition</span>
+      <span>KitchenStock v2.1 &mdash; Self-Contained Edition</span>
       <span id="footerTs"></span>
     </footer>
   </main>
 </div>
 
-<!-- ===== ITEM MODAL ===== -->
+<!-- ITEM MODAL -->
 <div id="itemModal" class="modal-overlay hidden">
   <div class="modal-card">
     <div class="modal-hdr">
@@ -420,22 +424,41 @@ textarea{resize:vertical;min-height:64px}
   </div>
 </div>
 
-<!-- ===== DELETE MODAL ===== -->
-<div id="deleteModal" class="modal-overlay hidden">
+<!-- ARCHIVE MODAL -->
+<div id="archiveModal" class="modal-overlay hidden">
   <div class="modal-card modal-sm">
-    <div class="modal-hdr"><h3>Remove Item</h3></div>
+    <div class="modal-hdr">
+      <h3>Remove from Active Inventory</h3>
+      <button class="close-btn" id="closeArch">&#10005;</button>
+    </div>
     <div class="modal-body">
-      <p>Remove <strong id="delItemName"></strong> from inventory?</p>
-      <p class="hint-text">This action cannot be undone.</p>
-      <div class="modal-ftr">
-        <button id="cancelDelete" class="btn btn-outline">Cancel</button>
-        <button id="confirmDelete" class="btn btn-danger">Remove</button>
+      <p style="font-weight:600;font-size:15px" id="archItemLabel"></p>
+      <p class="hint-text" style="margin-top:-8px">This item stays in your history and will appear in waste &amp; usage reports.</p>
+      <div class="form-group">
+        <label>Reason for removal</label>
+        <div class="reason-options" id="reasonOptions">
+          <label class="reason-opt"><input type="radio" name="archReason" value="used" checked/> Used Up / Consumed in Service</label>
+          <label class="reason-opt"><input type="radio" name="archReason" value="expired"/> Expired / Spoiled</label>
+          <label class="reason-opt"><input type="radio" name="archReason" value="damaged"/> Damaged / Contaminated</label>
+          <label class="reason-opt"><input type="radio" name="archReason" value="other"/> Other</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Note <span style="color:var(--tx3);font-weight:400;text-transform:none">(optional)</span></label>
+        <input type="text" id="archNote" placeholder="e.g. Used in tonight's dinner service"/>
+      </div>
+      <div class="modal-ftr" style="justify-content:space-between">
+        <button class="btn btn-danger btn-sm" id="permDeleteBtn">Permanent Delete</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-outline" id="cancelArch">Cancel</button>
+          <button class="btn btn-primary" id="confirmArch">Archive Item</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ===== REPORT MODAL ===== -->
+<!-- REPORT MODAL -->
 <div id="reportModal" class="modal-overlay hidden">
   <div class="modal-card" style="max-width:560px">
     <div class="modal-hdr">
@@ -449,7 +472,9 @@ textarea{resize:vertical;min-height:64px}
           <option value="current">Current Inventory Snapshot</option>
           <option value="expiring">Items Expiring in Period</option>
           <option value="purchased">Items Purchased in Period</option>
-          <option value="waste">Waste Report (Expired Items)</option>
+          <option value="waste">Waste Report (Expired / Damaged)</option>
+          <option value="usage">Usage History (Consumed Items)</option>
+          <option value="history">Full Archive (All Removed Items)</option>
         </select>
       </div>
       <div id="periodSection" class="form-group">
@@ -477,7 +502,7 @@ textarea{resize:vertical;min-height:64px}
   </div>
 </div>
 
-<!-- ===== SETTINGS MODAL ===== -->
+<!-- SETTINGS MODAL -->
 <div id="settingsModal" class="modal-overlay hidden">
   <div class="modal-card modal-sm">
     <div class="modal-hdr">
@@ -501,56 +526,46 @@ textarea{resize:vertical;min-height:64px}
   </div>
 </div>
 
-<!-- ===== PRINT VIEW ===== -->
+<!-- PRINT VIEW -->
 <div id="printView">
-  <div class="pr-wrap">
-    <div class="pr-header">
-      <div class="pr-brand">
-        <div class="pr-brand-icon">KS</div>
-        <div class="pr-brand-text">
-          <h1 id="prRestName"></h1>
-          <p id="prReportTitle">Inventory Report</p>
-        </div>
-      </div>
-      <div class="pr-meta">
-        <div><strong>Report Type:</strong> <span id="prType"></span></div>
-        <div><strong>Period:</strong> <span id="prPeriod"></span></div>
-        <div><strong>Generated:</strong> <span id="prGenerated"></span></div>
-        <div><strong>Chef:</strong> <span id="prChef"></span></div>
+  <div class="pr-header">
+    <div class="pr-brand">
+      <div class="pr-brand-icon">KS</div>
+      <div class="pr-brand-text">
+        <h1 id="prRestName"></h1>
+        <p id="prReportTitle">Inventory Report</p>
       </div>
     </div>
-    <div class="pr-summary">
-      <div class="pr-stat s-blue"><span class="pr-stat-val" id="prTotal">0</span><span class="pr-stat-lbl">Total Items</span></div>
-      <div class="pr-stat s-green"><span class="pr-stat-val" id="prFresh">0</span><span class="pr-stat-lbl">Fresh</span></div>
-      <div class="pr-stat s-warn"><span class="pr-stat-val" id="prWarn">0</span><span class="pr-stat-lbl">Expiring Soon</span></div>
-      <div class="pr-stat s-red"><span class="pr-stat-val" id="prExp">0</span><span class="pr-stat-lbl">Expired/Critical</span></div>
-      <div class="pr-stat s-blue"><span class="pr-stat-val" id="prValue">$0</span><span class="pr-stat-lbl">Est. Total Value</span></div>
+    <div class="pr-meta">
+      <div><strong>Report Type:</strong> <span id="prType"></span></div>
+      <div><strong>Period:</strong> <span id="prPeriod"></span></div>
+      <div><strong>Generated:</strong> <span id="prGenerated"></span></div>
+      <div><strong>Chef:</strong> <span id="prChef"></span></div>
     </div>
-    <p class="pr-section-title">Inventory Details</p>
-    <table class="pr-table">
-      <thead>
-        <tr>
-          <th>#</th><th>Item Name</th><th>Category</th><th>Quantity</th>
-          <th>Purchased</th><th>Expires</th><th>Age</th><th>Days Left</th>
-          <th>Status</th><th>Supplier</th><th>Unit Cost</th><th>Total Value</th>
-        </tr>
-      </thead>
-      <tbody id="prBody"></tbody>
-    </table>
-    <div class="pr-footer">
-      <span>KitchenStock &mdash; Kitchen Inventory Management System &mdash; Confidential</span>
-      <span id="prPage">Page 1</span>
-    </div>
+  </div>
+  <div class="pr-summary">
+    <div class="pr-stat s-blue"><span class="pr-stat-val" id="prTotal">0</span><span class="pr-stat-lbl" id="prTotalLbl">Total Items</span></div>
+    <div class="pr-stat s-green"><span class="pr-stat-val" id="prFresh">0</span><span class="pr-stat-lbl" id="prFreshLbl">Fresh</span></div>
+    <div class="pr-stat s-warn"><span class="pr-stat-val" id="prWarn">0</span><span class="pr-stat-lbl" id="prWarnLbl">Expiring Soon</span></div>
+    <div class="pr-stat s-red"><span class="pr-stat-val" id="prExp">0</span><span class="pr-stat-lbl" id="prExpLbl">Expired / Critical</span></div>
+    <div class="pr-stat s-blue"><span class="pr-stat-val" id="prValue">$0</span><span class="pr-stat-lbl">Est. Total Value</span></div>
+  </div>
+  <p class="pr-section-title" id="prSectionTitle">Inventory Details</p>
+  <table class="pr-table">
+    <thead id="prHead"></thead>
+    <tbody id="prBody"></tbody>
+  </table>
+  <div class="pr-footer">
+    <span>KitchenStock &mdash; Kitchen Inventory Management System &mdash; Confidential</span>
+    <span id="prPage">Page 1</span>
   </div>
 </div>
 
-<!-- ===== TOAST ===== -->
 <div id="toast" class="toast hidden"><span id="toastMsg"></span></div>
 
 <script>
 'use strict';
 
-// ===== CONSTANTS =====
 const SK_ITEMS   = 'ks_items';
 const SK_SETT    = 'ks_settings';
 const SK_SESSION = 'ks_auth';
@@ -558,21 +573,19 @@ const DEF_PW     = 'chef1234';
 const WARN_DAYS  = 3;
 const CRIT_DAYS  = 1;
 
-// ===== STATE =====
-let items    = [];
-let sett     = { restaurant: 'My Restaurant', chef: 'Head Chef', password: DEF_PW };
-let editId   = null;
-let delId    = null;
-let repPer   = 'week';
-let toastTmr = null;
-let alarmInt = null;
+let items       = [];
+let sett        = { restaurant: 'My Restaurant', chef: 'Head Chef', password: DEF_PW };
+let editId      = null;
+let archId      = null;
+let repPer      = 'week';
+let showArchive = false;
+let toastTmr    = null;
+let alarmInt    = null;
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   loadSettings();
-  if (sessionStorage.getItem(SK_SESSION) === '1') {
-    showApp();
-  }
+  if (sessionStorage.getItem(SK_SESSION) === '1') showApp();
   initClock();
   bindAll();
 });
@@ -593,29 +606,37 @@ function showLogin() {
   if (alarmInt) clearInterval(alarmInt);
 }
 
+function doLogin() {
+  const pw  = document.getElementById('passwordInput').value;
+  const err = document.getElementById('loginError');
+  err.classList.add('hidden');
+  if (pw === sett.password) {
+    sessionStorage.setItem(SK_SESSION, '1');
+    document.getElementById('passwordInput').value = '';
+    showApp();
+  } else {
+    err.classList.remove('hidden');
+    document.getElementById('passwordInput').select();
+  }
+}
+
 // ===== SETTINGS =====
 function loadSettings() {
-  try {
-    const raw = localStorage.getItem(SK_SETT);
-    if (raw) sett = { ...sett, ...JSON.parse(raw) };
-  } catch {}
+  try { const r = localStorage.getItem(SK_SETT); if (r) sett = { ...sett, ...JSON.parse(r) }; } catch {}
 }
 
-function saveSettingsStore() {
-  localStorage.setItem(SK_SETT, JSON.stringify(sett));
-}
+function saveSettingsStore() { localStorage.setItem(SK_SETT, JSON.stringify(sett)); }
 
 function applySettingsToUI() {
-  const name = sett.restaurant || 'KitchenStock';
-  document.getElementById('headerRestaurant').textContent = name;
+  document.getElementById('headerRestaurant').textContent = sett.restaurant || 'KitchenStock';
 }
 
 // ===== STORAGE =====
 function loadItems() {
   try {
-    const raw = localStorage.getItem(SK_ITEMS);
-    items = raw ? JSON.parse(raw) : seedData();
-    if (!raw) saveItems();
+    const r = localStorage.getItem(SK_ITEMS);
+    items = r ? JSON.parse(r) : seedData();
+    if (!r) saveItems();
   } catch { items = []; }
 }
 
@@ -625,22 +646,15 @@ function saveItems() {
   if (el) el.textContent = 'Last saved: ' + new Date().toLocaleTimeString();
 }
 
-// ===== EXPORT =====
+// ===== EXPORT / IMPORT =====
 function exportData() {
-  const payload = {
-    version: '2.0', app: 'KitchenStock',
+  const blob = new Blob([JSON.stringify({ version:'2.1', app:'KitchenStock',
     exportDate: new Date().toISOString(),
     settings: { restaurant: sett.restaurant, chef: sett.chef },
-    items
-  };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = `kitchenstock-backup-${todayStr()}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('Data exported as JSON file.');
+    items }, null, 2)], { type:'application/json' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `kitchenstock-backup-${todayStr()}.json` });
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('Data exported.');
 }
 
 function importData(file) {
@@ -650,27 +664,18 @@ function importData(file) {
     try {
       const data = JSON.parse(e.target.result);
       if (!data.items || !Array.isArray(data.items)) throw new Error('Invalid format');
-      const count = data.items.length;
-      if (!confirm(`Import ${count} items from "${file.name}"?\n\nThis will REPLACE all current inventory data.`)) return;
+      if (!confirm(`Import ${data.items.length} items from "${file.name}"?\nThis will REPLACE all current data.`)) return;
       items = data.items;
-      if (data.settings) {
-        sett.restaurant = data.settings.restaurant || sett.restaurant;
-        sett.chef       = data.settings.chef || sett.chef;
-        saveSettingsStore();
-        applySettingsToUI();
-      }
-      saveItems();
-      renderAll();
-      toast(`Imported ${count} items successfully.`);
-    } catch (err) {
-      alert('Import failed: ' + err.message + '\nMake sure you selected a valid KitchenStock JSON backup.');
-    }
+      if (data.settings) { sett.restaurant = data.settings.restaurant || sett.restaurant; sett.chef = data.settings.chef || sett.chef; saveSettingsStore(); applySettingsToUI(); }
+      saveItems(); renderAll(); toast(`Imported ${data.items.length} items.`);
+    } catch (err) { alert('Import failed: ' + err.message); }
   };
   reader.readAsText(file);
 }
 
 // ===== STATUS =====
 function status(item) {
+  if (item.archived) return 'archived';
   const today = todayStr();
   if (item.expiryDate < today) return 'expired';
   const d = daysUntil(item.expiryDate);
@@ -679,74 +684,94 @@ function status(item) {
   return 'fresh';
 }
 
-function daysUntil(ds) {
-  return Math.round((new Date(ds + 'T00:00:00') - new Date(todayStr() + 'T00:00:00')) / 86400000);
-}
-
-function daysSince(ds) {
-  return Math.round((new Date(todayStr() + 'T00:00:00') - new Date(ds + 'T00:00:00')) / 86400000);
-}
-
-function todayStr() {
-  return new Date().toISOString().split('T')[0];
-}
+function daysUntil(ds) { return Math.round((new Date(ds+'T00:00:00') - new Date(todayStr()+'T00:00:00')) / 86400000); }
+function daysSince(ds) { return Math.round((new Date(todayStr()+'T00:00:00') - new Date(ds+'T00:00:00')) / 86400000); }
+function todayStr()    { return new Date().toISOString().split('T')[0]; }
 
 // ===== RENDER =====
 function renderAll() {
-  const filtered = applyFilters();
   renderStats();
-  renderTable(filtered);
+  renderTable(applyFilters());
   renderAlerts();
 }
 
 function renderStats() {
-  const expired = items.filter(i => { const s = status(i); return s==='expired'||s==='critical'; }).length;
-  const warning = items.filter(i => status(i) === 'warning').length;
-  const fresh   = items.filter(i => status(i) === 'fresh').length;
-  set('statTotal',   items.length);
-  set('statFresh',   fresh);
-  set('statWarning', warning);
+  const active  = items.filter(i => !i.archived);
+  const archCnt = items.length - active.length;
+  const expired = active.filter(i => { const s=status(i); return s==='expired'||s==='critical'; }).length;
+  set('statTotal',   active.length);
+  set('statFresh',   active.filter(i => status(i)==='fresh').length);
+  set('statWarning', active.filter(i => status(i)==='warning').length);
   set('statExpired', expired);
-  const badge = expired + warning;
+  const ac = document.getElementById('archCount');
+  if (ac) ac.textContent = archCnt;
   const nb = document.getElementById('notifCount');
+  const badge = expired + active.filter(i => status(i)==='warning').length;
   if (badge > 0) { nb.textContent = badge; nb.classList.remove('hidden'); }
   else nb.classList.add('hidden');
 }
 
 function renderAlerts() {
-  const expired  = items.filter(i => status(i) === 'expired');
-  const critical = items.filter(i => status(i) === 'critical');
+  const active   = items.filter(i => !i.archived);
+  const expired  = active.filter(i => status(i) === 'expired');
+  const critical = active.filter(i => status(i) === 'critical');
   const banner   = document.getElementById('alertBanner');
   const content  = document.getElementById('alertContent');
   const parts    = [];
   if (expired.length)  parts.push(`<strong>${expired.length} EXPIRED:</strong> ${expired.map(i=>esc(i.name)).join(', ')}`);
   if (critical.length) parts.push(`<strong>${critical.length} CRITICAL (use today):</strong> ${critical.map(i=>esc(i.name)).join(', ')}`);
-  if (parts.length) {
-    content.innerHTML = parts.join('&ensp;&mdash;&ensp;');
-    banner.classList.remove('hidden');
-  } else {
-    banner.classList.add('hidden');
-  }
+  if (parts.length) { content.innerHTML = parts.join('&ensp;&mdash;&ensp;'); banner.classList.remove('hidden'); }
+  else banner.classList.add('hidden');
 }
 
 function renderTable(filtered) {
   const tbody = document.getElementById('inventoryBody');
   const empty = document.getElementById('emptyState');
-  if (!filtered.length) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+  // Update dynamic column headers
+  const c7 = document.getElementById('thCol7');
+  const c8 = document.getElementById('thCol8');
+  if (c7) c7.textContent = showArchive ? 'Archived On' : 'Days Left';
+  if (c8) c8.textContent = showArchive ? 'Reason' : 'Status';
+  // Update empty state messaging
+  if (!filtered.length) {
+    tbody.innerHTML = '';
+    empty.classList.remove('hidden');
+    set('emptyMsg', showArchive ? 'No archived items found.' : 'No items found.');
+    set('emptySub', showArchive ? 'Items you archive will appear here.' : 'Add your first inventory item using the button above.');
+    return;
+  }
   empty.classList.add('hidden');
   tbody.innerHTML = filtered.map(buildRow).join('');
 }
 
 function buildRow(item) {
-  const s    = status(item);
-  const left = daysUntil(item.expiryDate);
-  const age  = daysSince(item.purchaseDate);
-  const rc   = s==='expired' ? 'row-expired' : s==='critical' ? 'row-critical' : s==='warning' ? 'row-warning' : '';
-  const dc   = `days-${s}`;
-  const dl   = s==='expired' ? `${Math.abs(left)}d ago` : left===0 ? 'Today' : `${left}d`;
-  const bl   = {fresh:'Fresh',warning:'Expiring Soon',critical:'Critical',expired:'Expired'}[s];
   const sup  = item.supplier ? `<span class="item-supplier">${esc(item.supplier)}</span>` : '';
   const cost = item.cost ? `<span style="color:var(--tx3);font-size:11px;">&nbsp;($${(+item.cost).toFixed(2)}/${esc(item.unit)})</span>` : '';
+  const age  = daysSince(item.purchaseDate);
+
+  if (item.archived) {
+    const rl = {used:'Used Up',expired:'Expired',damaged:'Damaged',other:'Other'}[item.archiveReason] || 'Archived';
+    return `<tr class="row-archived" data-id="${item.id}">
+      <td><span class="item-name">${esc(item.name)}</span>${sup}</td>
+      <td><span class="cat-tag">${esc(item.category)}</span></td>
+      <td>${esc(String(item.quantity))} ${esc(item.unit)}${cost}</td>
+      <td>${fmtDate(item.purchaseDate)}</td>
+      <td>${fmtDate(item.expiryDate)}</td>
+      <td style="color:var(--tx3)">${age}d</td>
+      <td style="color:var(--tx2)">${fmtDate(item.archivedAt||'')}</td>
+      <td><span class="badge badge-archived">${rl}</span></td>
+      <td><div class="action-btns">
+        <button class="btn-icon btn-icon-restore" onclick="restoreItem('${item.id}')">Restore</button>
+        <button class="btn-icon btn-icon-del" onclick="permDeleteItem('${item.id}')">Delete</button>
+      </div></td>
+    </tr>`;
+  }
+
+  const s    = status(item);
+  const left = daysUntil(item.expiryDate);
+  const rc   = s==='expired'?'row-expired':s==='critical'?'row-critical':s==='warning'?'row-warning':'';
+  const dl   = s==='expired'?`${Math.abs(left)}d ago`:left===0?'Today':`${left}d`;
+  const bl   = {fresh:'Fresh',warning:'Expiring Soon',critical:'Critical',expired:'Expired'}[s];
   return `<tr class="${rc}" data-id="${item.id}">
     <td><span class="item-name">${esc(item.name)}</span>${sup}</td>
     <td><span class="cat-tag">${esc(item.category)}</span></td>
@@ -754,37 +779,39 @@ function buildRow(item) {
     <td>${fmtDate(item.purchaseDate)}</td>
     <td>${fmtDate(item.expiryDate)}</td>
     <td style="color:var(--tx3)">${age}d</td>
-    <td class="${dc}">${dl}</td>
+    <td class="days-${s}">${dl}</td>
     <td><span class="badge badge-${s}">${bl}</span></td>
     <td><div class="action-btns">
       <button class="btn-icon" onclick="openEdit('${item.id}')">Edit</button>
-      <button class="btn-icon btn-icon-del" onclick="openDel('${item.id}')">Del</button>
+      <button class="btn-icon btn-icon-arch" onclick="openArch('${item.id}')">Archive</button>
     </div></td>
   </tr>`;
 }
 
 // ===== FILTERS =====
 function applyFilters() {
-  const q  = document.getElementById('searchInput').value.toLowerCase();
+  const q   = document.getElementById('searchInput').value.toLowerCase();
   const cat = document.getElementById('categoryFilter').value;
   const st  = document.getElementById('statusFilter').value;
   const so  = document.getElementById('sortBy').value;
   const ord = {expired:0,critical:1,warning:2,fresh:3};
 
   let res = items.filter(i => {
+    if (!!i.archived !== showArchive) return false;
     const ms = !q || i.name.toLowerCase().includes(q) || i.category.toLowerCase().includes(q)
                || (i.supplier||'').toLowerCase().includes(q);
-    return ms && (cat==='all'||i.category===cat) && (st==='all'||status(i)===st);
+    const matchCat = cat === 'all' || i.category === cat;
+    const matchSt  = showArchive || st === 'all' || status(i) === st;
+    return ms && matchCat && matchSt;
   });
 
   res.sort((a,b) => {
-    switch(so) {
-      case 'name':     return a.name.localeCompare(b.name);
-      case 'category': return a.category.localeCompare(b.category)||a.name.localeCompare(b.name);
-      case 'purchase': return a.purchaseDate.localeCompare(b.purchaseDate);
-      case 'status':   return (ord[status(a)]||0)-(ord[status(b)]||0)||a.expiryDate.localeCompare(b.expiryDate);
-      default:         return a.expiryDate.localeCompare(b.expiryDate)||a.name.localeCompare(b.name);
-    }
+    if (so === 'archived') return (b.archivedAt||'').localeCompare(a.archivedAt||'');
+    if (so === 'name')     return a.name.localeCompare(b.name);
+    if (so === 'category') return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
+    if (so === 'purchase') return a.purchaseDate.localeCompare(b.purchaseDate);
+    if (so === 'status')   return (ord[status(a)]||0)-(ord[status(b)]||0) || a.expiryDate.localeCompare(b.expiryDate);
+    return a.expiryDate.localeCompare(b.expiryDate) || a.name.localeCompare(b.name);
   });
   return res;
 }
@@ -798,12 +825,9 @@ function startAlarms() {
 }
 
 function sendPushIfNeeded() {
-  const urgent = items.filter(i => { const s=status(i); return s==='expired'||s==='critical'; });
+  const urgent = items.filter(i => !i.archived && (status(i)==='expired'||status(i)==='critical'));
   if (urgent.length && Notification && Notification.permission === 'granted') {
-    new Notification('KitchenStock Alert', {
-      body: `${urgent.length} item(s) need attention: ${urgent.map(i=>i.name).join(', ')}`,
-      tag: 'ks-alert'
-    });
+    new Notification('KitchenStock Alert', { body: `${urgent.length} item(s) need attention: ${urgent.map(i=>i.name).join(', ')}`, tag:'ks-alert' });
   }
 }
 
@@ -836,20 +860,16 @@ function openEdit(id) {
   document.getElementById('fName').focus();
 }
 
-function closeItemModal() {
-  document.getElementById('itemModal').classList.add('hidden');
-  clearForm(); editId = null;
-}
+function closeItemModal() { document.getElementById('itemModal').classList.add('hidden'); clearForm(); editId = null; }
 
 function clearForm() {
-  ['fName','fCategory','fQty','fUnit','fPurchase','fExpiry','fSupplier','fCost','fNotes']
-    .forEach(id => { document.getElementById(id).value = ''; });
+  ['fName','fCategory','fQty','fUnit','fPurchase','fExpiry','fSupplier','fCost','fNotes'].forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('formError').classList.add('hidden');
 }
 
 function saveItem(e) {
   e.preventDefault();
-  const err  = document.getElementById('formError');
+  const err   = document.getElementById('formError');
   err.classList.add('hidden');
   const name  = document.getElementById('fName').value.trim();
   const cat   = document.getElementById('fCategory').value;
@@ -857,49 +877,83 @@ function saveItem(e) {
   const unit  = document.getElementById('fUnit').value;
   const pur   = document.getElementById('fPurchase').value;
   const exp   = document.getElementById('fExpiry').value;
-  const sup   = document.getElementById('fSupplier').value.trim();
-  const cost  = document.getElementById('fCost').value;
-  const notes = document.getElementById('fNotes').value.trim();
-
-  if (!name||!cat||!qty||!unit||!pur||!exp) {
-    err.textContent='Please fill in all required fields.'; err.classList.remove('hidden'); return;
-  }
-  if (exp < pur) {
-    err.textContent='Expiry date cannot be before purchase date.'; err.classList.remove('hidden'); return;
-  }
-
+  if (!name||!cat||!qty||!unit||!pur||!exp) { err.textContent='Please fill in all required fields.'; err.classList.remove('hidden'); return; }
+  if (exp < pur) { err.textContent='Expiry date cannot be before purchase date.'; err.classList.remove('hidden'); return; }
   const d = { name, category:cat, quantity:parseFloat(qty), unit, purchaseDate:pur, expiryDate:exp,
-              supplier:sup, cost:cost?parseFloat(cost):null, notes };
-
+              supplier: document.getElementById('fSupplier').value.trim(),
+              cost: document.getElementById('fCost').value ? parseFloat(document.getElementById('fCost').value) : null,
+              notes: document.getElementById('fNotes').value.trim() };
   if (editId) {
     const idx = items.findIndex(i => i.id === editId);
     if (idx !== -1) items[idx] = { ...items[idx], ...d };
     toast(`"${name}" updated.`);
   } else {
-    items.push({ id:uid(), ...d });
-    toast(`"${name}" added to inventory.`);
+    items.push({ id:uid(), archived:false, archivedAt:null, archiveReason:null, archiveNote:'', ...d });
+    toast(`"${name}" added.`);
   }
   saveItems(); renderAll(); closeItemModal(); sendPushIfNeeded();
 }
 
-function openDel(id) {
+// ===== ARCHIVE / RESTORE =====
+function openArch(id) {
   const item = items.find(i => i.id === id);
   if (!item) return;
-  delId = id;
-  document.getElementById('delItemName').textContent = item.name;
-  document.getElementById('deleteModal').classList.remove('hidden');
+  archId = id;
+  document.getElementById('archItemLabel').textContent = `"${item.name}" — ${item.quantity} ${item.unit}`;
+  document.getElementById('archNote').value = '';
+  const r = document.querySelector('input[name="archReason"][value="used"]');
+  if (r) r.checked = true;
+  highlightReason();
+  document.getElementById('archiveModal').classList.remove('hidden');
 }
 
-function closeDel() {
-  document.getElementById('deleteModal').classList.add('hidden'); delId = null;
+function closeArch() { document.getElementById('archiveModal').classList.add('hidden'); archId = null; }
+
+function confirmArch() {
+  if (!archId) return;
+  const id     = archId;
+  const reason = document.querySelector('input[name="archReason"]:checked')?.value || 'other';
+  const note   = document.getElementById('archNote').value.trim();
+  const idx    = items.findIndex(i => i.id === id);
+  if (idx === -1) { closeArch(); return; }
+  const name = items[idx].name;
+  items[idx] = { ...items[idx], archived:true, archivedAt:todayStr(), archiveReason:reason, archiveNote:note };
+  saveItems(); renderAll(); closeArch();
+  toast(`"${name}" archived as "${reason}".`);
 }
 
-function confirmDel() {
-  if (!delId) return;
-  const item = items.find(i => i.id === delId);
-  items = items.filter(i => i.id !== delId);
-  saveItems(); renderAll(); closeDel();
-  if (item) toast(`"${item.name}" removed.`);
+function permDeleteFromArchModal() {
+  if (!archId) return;
+  const item = items.find(i => i.id === archId);
+  if (!item) return;
+  if (!confirm(`Permanently delete "${item.name}"?\n\nThis removes it from ALL records and reports forever.`)) return;
+  items = items.filter(i => i.id !== archId);
+  saveItems(); renderAll(); closeArch();
+  toast(`"${item.name}" permanently deleted.`);
+}
+
+function restoreItem(id) {
+  const idx = items.findIndex(i => i.id === id);
+  if (idx === -1) return;
+  const name = items[idx].name;
+  items[idx] = { ...items[idx], archived:false, archivedAt:null, archiveReason:null, archiveNote:'' };
+  saveItems(); renderAll();
+  toast(`"${name}" restored to active inventory.`);
+}
+
+function permDeleteItem(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  if (!confirm(`Permanently delete "${item.name}"?\n\nThis removes it from ALL records and reports forever.`)) return;
+  items = items.filter(i => i.id !== id);
+  saveItems(); renderAll();
+  toast(`"${item.name}" permanently deleted.`);
+}
+
+function highlightReason() {
+  document.querySelectorAll('.reason-opt').forEach(el => {
+    el.classList.toggle('selected', el.querySelector('input')?.checked);
+  });
 }
 
 // ===== REPORTS =====
@@ -909,271 +963,276 @@ function openReportModal() {
   updateRepPreview();
 }
 
-function closeReportModal() {
-  document.getElementById('reportModal').classList.add('hidden');
-}
+function closeReportModal() { document.getElementById('reportModal').classList.add('hidden'); }
 
 function getPeriodDates(per) {
   const t = new Date(); const ts = todayStr();
   const fmt = d => d.toISOString().split('T')[0];
-  if (per === 'today') return { start: ts, end: ts, label: 'Today, ' + fmtDate(ts) };
-  if (per === 'week') {
-    const dow = t.getDay(); const mon = new Date(t);
-    mon.setDate(t.getDate() - (dow === 0 ? 6 : dow - 1));
-    const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
-    return { start: fmt(mon), end: fmt(sun), label: `This Week (${fmtDate(fmt(mon))} – ${fmtDate(fmt(sun))})` };
+  if (per==='today') return { start:ts, end:ts, label:'Today, '+fmtDate(ts) };
+  if (per==='week') {
+    const dow=t.getDay(), mon=new Date(t); mon.setDate(t.getDate()-(dow===0?6:dow-1));
+    const sun=new Date(mon); sun.setDate(mon.getDate()+6);
+    return { start:fmt(mon), end:fmt(sun), label:`This Week (${fmtDate(fmt(mon))} – ${fmtDate(fmt(sun))})` };
   }
-  if (per === 'month') {
-    const s = new Date(t.getFullYear(), t.getMonth(), 1);
-    const e = new Date(t.getFullYear(), t.getMonth() + 1, 0);
-    return { start: fmt(s), end: fmt(e), label: t.toLocaleString('default',{month:'long',year:'numeric'}) };
+  if (per==='month') {
+    const s=new Date(t.getFullYear(),t.getMonth(),1), e=new Date(t.getFullYear(),t.getMonth()+1,0);
+    return { start:fmt(s), end:fmt(e), label:t.toLocaleString('default',{month:'long',year:'numeric'}) };
   }
-  if (per === 'quarter') {
-    const q = Math.floor(t.getMonth() / 3);
-    const s = new Date(t.getFullYear(), q * 3, 1);
-    const e = new Date(t.getFullYear(), q * 3 + 3, 0);
-    return { start: fmt(s), end: fmt(e), label: `Q${q+1} ${t.getFullYear()} (${fmtDate(fmt(s))} – ${fmtDate(fmt(e))})` };
+  if (per==='quarter') {
+    const q=Math.floor(t.getMonth()/3), s=new Date(t.getFullYear(),q*3,1), e=new Date(t.getFullYear(),q*3+3,0);
+    return { start:fmt(s), end:fmt(e), label:`Q${q+1} ${t.getFullYear()} (${fmtDate(fmt(s))} – ${fmtDate(fmt(e))})` };
   }
-  if (per === 'half') {
-    const h = t.getMonth() < 6 ? 0 : 1;
-    const s = new Date(t.getFullYear(), h * 6, 1);
-    const e = new Date(t.getFullYear(), h * 6 + 6, 0);
-    return { start: fmt(s), end: fmt(e), label: `H${h+1} ${t.getFullYear()} (${fmtDate(fmt(s))} – ${fmtDate(fmt(e))})` };
+  if (per==='half') {
+    const h=t.getMonth()<6?0:1, s=new Date(t.getFullYear(),h*6,1), e=new Date(t.getFullYear(),h*6+6,0);
+    return { start:fmt(s), end:fmt(e), label:`H${h+1} ${t.getFullYear()} (${fmtDate(fmt(s))} – ${fmtDate(fmt(e))})` };
   }
-  if (per === 'year') {
-    const s = new Date(t.getFullYear(), 0, 1);
-    const e = new Date(t.getFullYear(), 11, 31);
-    return { start: fmt(s), end: fmt(e), label: `Full Year ${t.getFullYear()}` };
+  if (per==='year') {
+    const s=new Date(t.getFullYear(),0,1), e=new Date(t.getFullYear(),11,31);
+    return { start:fmt(s), end:fmt(e), label:`Full Year ${t.getFullYear()}` };
   }
-  if (per === 'custom') {
-    const rs = document.getElementById('repStart').value;
-    const re = document.getElementById('repEnd').value;
-    if (!rs || !re) return { start: ts, end: ts, label: 'Custom Range (select dates above)' };
-    return { start: rs, end: re, label: `${fmtDate(rs)} – ${fmtDate(re)}` };
+  if (per==='custom') {
+    const rs=document.getElementById('repStart').value, re=document.getElementById('repEnd').value;
+    if (!rs||!re) return { start:ts, end:ts, label:'Custom Range (select dates above)' };
+    return { start:rs, end:re, label:`${fmtDate(rs)} – ${fmtDate(re)}` };
   }
-  return { start: ts, end: ts, label: 'Today' };
+  return { start:ts, end:ts, label:'Today' };
 }
 
 function filterItemsForReport(type, per) {
-  const pd = getPeriodDates(per);
-  if (type === 'current') return { rows: [...items], pd: { ...pd, label: 'Current Inventory (as of today)' } };
-  if (type === 'expiring') return { rows: items.filter(i => i.expiryDate >= pd.start && i.expiryDate <= pd.end), pd };
-  if (type === 'purchased') return { rows: items.filter(i => i.purchaseDate >= pd.start && i.purchaseDate <= pd.end), pd };
-  if (type === 'waste') {
-    const today = todayStr();
-    return { rows: items.filter(i => i.expiryDate < today && i.expiryDate >= pd.start && i.expiryDate <= pd.end),
-             pd: { ...pd, label: pd.label + ' — Waste Report' } };
+  const pd      = getPeriodDates(per);
+  const active  = items.filter(i => !i.archived);
+  const archived = items.filter(i => i.archived);
+
+  if (type==='current')  return { rows:active, pd:{ ...pd, label:'Current Inventory (as of today)' } };
+  if (type==='expiring') return { rows:active.filter(i => i.expiryDate>=pd.start && i.expiryDate<=pd.end), pd };
+
+  // purchased: ALL items (active + archived) bought in the period — full history
+  if (type==='purchased') return { rows:items.filter(i => i.purchaseDate>=pd.start && i.purchaseDate<=pd.end), pd };
+
+  // waste: archived (expired/damaged) by archivedAt date + still-active items already expired
+  if (type==='waste') {
+    const fromArch  = archived.filter(i => (i.archiveReason==='expired'||i.archiveReason==='damaged') && i.archivedAt>=pd.start && i.archivedAt<=pd.end);
+    const stillActive = active.filter(i => status(i)==='expired' && i.expiryDate>=pd.start && i.expiryDate<=pd.end);
+    return { rows:[...fromArch,...stillActive], pd:{ ...pd, label:pd.label+' — Waste / Spoilage Report' } };
   }
-  return { rows: [], pd };
+
+  // usage: archived items consumed in service
+  if (type==='usage') return { rows:archived.filter(i => i.archiveReason==='used' && i.archivedAt>=pd.start && i.archivedAt<=pd.end), pd:{ ...pd, label:pd.label+' — Usage History' } };
+
+  // history: all archived items removed in period
+  if (type==='history') return { rows:archived.filter(i => i.archivedAt>=pd.start && i.archivedAt<=pd.end), pd:{ ...pd, label:pd.label+' — Full Archive' } };
+
+  return { rows:[], pd };
 }
 
 function updateRepPreview() {
   const type = document.getElementById('repType').value;
-  const per  = repPer;
-  const pSec = document.getElementById('periodSection');
-  const cRan = document.getElementById('customRange');
-  if (type === 'current') {
-    pSec.style.opacity = '0.4';
-    cRan.classList.add('hidden');
-  } else {
-    pSec.style.opacity = '1';
-    cRan.classList.toggle('hidden', per !== 'custom');
-  }
-  const { rows, pd } = filterItemsForReport(type, per);
-  const val = rows.reduce((a, i) => a + (i.cost && i.quantity ? i.cost * i.quantity : 0), 0);
+  const isArchive = ['waste','usage','history'].includes(type);
+  document.getElementById('periodSection').style.opacity = type==='current' ? '0.4' : '1';
+  document.getElementById('customRange').classList.toggle('hidden', repPer!=='custom' || type==='current');
+  const { rows, pd } = filterItemsForReport(type, repPer);
+  const val = rows.reduce((a,i) => a+(i.cost&&i.quantity?i.cost*i.quantity:0), 0);
+  const extra = isArchive ? ` &mdash; Drawn from <strong>archived history</strong>` : '';
   document.getElementById('repPreview').innerHTML =
-    `<strong>${rows.length} item(s)</strong> will be included &mdash; Period: <strong>${pd.label}</strong>` +
-    (val > 0 ? ` &mdash; Est. Value: <strong>$${val.toFixed(2)}</strong>` : '');
+    `<strong>${rows.length} item(s)</strong> will be included &mdash; Period: <strong>${pd.label}</strong>${extra}` +
+    (val>0 ? ` &mdash; Est. Value: <strong>$${val.toFixed(2)}</strong>` : '');
 }
 
 function generateReport() {
   const type = document.getElementById('repType').value;
   const { rows, pd } = filterItemsForReport(type, repPer);
+  const isArchiveRep = ['waste','usage','history'].includes(type);
 
   const typeLabel = {
     current:'Current Inventory Snapshot', expiring:'Expiring Items Report',
-    purchased:'Purchased Items Report', waste:'Waste / Spoilage Report'
+    purchased:'Purchased Items Report',   waste:'Waste / Spoilage Report',
+    usage:'Usage History Report',         history:'Full Archive Report'
   }[type] || 'Inventory Report';
 
-  const fresh   = rows.filter(i => status(i)==='fresh').length;
-  const warn    = rows.filter(i => status(i)==='warning').length;
-  const expired = rows.filter(i => { const s=status(i); return s==='expired'||s==='critical'; }).length;
-  const val     = rows.reduce((a,i) => a + (i.cost&&i.quantity ? i.cost*i.quantity : 0), 0);
+  let s1=0, s2=0, s3=0, val=0;
+  rows.forEach(i => {
+    val += (i.cost&&i.quantity ? i.cost*i.quantity : 0);
+    if (isArchiveRep) {
+      if (i.archiveReason==='used')    s1++;
+      else if (i.archiveReason==='expired'||i.archiveReason==='damaged') s2++;
+      else s3++;
+    } else {
+      const s=status(i);
+      if (s==='fresh') s1++;
+      else if (s==='warning') s2++;
+      else if (s==='expired'||s==='critical') s3++;
+    }
+  });
 
-  set('prRestName',    sett.restaurant || 'KitchenStock');
+  set('prRestName',    sett.restaurant||'KitchenStock');
   set('prReportTitle', typeLabel);
   set('prType',        typeLabel);
   set('prPeriod',      pd.label);
   set('prGenerated',   new Date().toLocaleString());
-  set('prChef',        sett.chef || 'Head Chef');
+  set('prChef',        sett.chef||'Head Chef');
   set('prTotal',       rows.length);
-  set('prFresh',       fresh);
-  set('prWarn',        warn);
-  set('prExp',         expired);
-  set('prValue',       val > 0 ? '$' + val.toFixed(2) : 'N/A');
+  set('prFresh',       s1);
+  set('prWarn',        s2);
+  set('prExp',         s3);
+  set('prValue',       val>0 ? '$'+val.toFixed(2) : 'N/A');
+
+  if (isArchiveRep) {
+    set('prFreshLbl',   'Used Up');
+    set('prWarnLbl',    'Expired / Damaged');
+    set('prExpLbl',     'Other');
+    set('prSectionTitle', 'Archive Details');
+    document.getElementById('prHead').innerHTML = `<tr>
+      <th>#</th><th>Item Name</th><th>Category</th><th>Qty</th>
+      <th>Purchased</th><th>Expiry Date</th><th>Archived On</th><th>Reason</th>
+      <th>Supplier</th><th>Unit Cost</th><th>Total Value</th><th>Note</th></tr>`;
+  } else {
+    set('prFreshLbl',   'Fresh');
+    set('prWarnLbl',    'Expiring Soon');
+    set('prExpLbl',     'Expired / Critical');
+    set('prSectionTitle','Inventory Details');
+    document.getElementById('prHead').innerHTML = `<tr>
+      <th>#</th><th>Item Name</th><th>Category</th><th>Qty</th>
+      <th>Purchased</th><th>Expires</th><th>Age</th><th>Days Left</th>
+      <th>Status</th><th>Supplier</th><th>Unit Cost</th><th>Total Value</th></tr>`;
+  }
 
   const sorted = [...rows].sort((a,b) => {
-    const ord = {expired:0,critical:1,warning:2,fresh:3};
-    return (ord[status(a)]||0)-(ord[status(b)]||0)||a.expiryDate.localeCompare(b.expiryDate);
+    if (isArchiveRep) return (a.archivedAt||'').localeCompare(b.archivedAt||'') || a.name.localeCompare(b.name);
+    const ord={expired:0,critical:1,warning:2,fresh:3};
+    return (ord[status(a)]||0)-(ord[status(b)]||0) || a.expiryDate.localeCompare(b.expiryDate);
   });
 
   document.getElementById('prBody').innerHTML = sorted.map((item, idx) => {
+    const tv = item.cost&&item.quantity ? '$'+(item.cost*item.quantity).toFixed(2) : '—';
+    const uc = item.cost ? '$'+parseFloat(item.cost).toFixed(2) : '—';
+    if (isArchiveRep) {
+      const rl = {used:'Used Up',expired:'Expired',damaged:'Damaged',other:'Other'}[item.archiveReason||'other']||'Archived';
+      const rc = {used:'ps-used',expired:'ps-expired',damaged:'ps-damaged',other:'ps-other'}[item.archiveReason||'other']||'ps-other';
+      return `<tr><td>${idx+1}</td><td><strong>${esc(item.name)}</strong></td><td>${esc(item.category)}</td>
+        <td>${esc(String(item.quantity))} ${esc(item.unit)}</td>
+        <td>${fmtDate(item.purchaseDate)}</td><td>${fmtDate(item.expiryDate)}</td>
+        <td><strong>${fmtDate(item.archivedAt||'')}</strong></td>
+        <td class="${rc}">${rl}</td>
+        <td>${esc(item.supplier||'—')}</td><td>${uc}</td><td>${tv}</td>
+        <td style="font-size:9px;color:#64748b">${esc(item.archiveNote||'—')}</td></tr>`;
+    }
     const s    = status(item);
     const left = daysUntil(item.expiryDate);
     const age  = daysSince(item.purchaseDate);
-    const dl   = s==='expired' ? `${Math.abs(left)}d ago` : left===0 ? 'Today' : `${left}d`;
-    const sc   = `ps-${s}`;
+    const dl   = s==='expired'?`${Math.abs(left)}d ago`:left===0?'Today':`${left}d`;
     const sl   = {fresh:'Fresh',warning:'Expiring Soon',critical:'Critical',expired:'EXPIRED'}[s];
-    const tv   = item.cost && item.quantity ? '$'+(item.cost*item.quantity).toFixed(2) : '—';
-    const uc   = item.cost ? '$'+parseFloat(item.cost).toFixed(2) : '—';
-    return `<tr>
-      <td>${idx+1}</td>
+    return `<tr><td>${idx+1}</td>
       <td><strong>${esc(item.name)}</strong>${item.notes?`<br><span style="font-size:9px;color:#64748b">${esc(item.notes)}</span>`:''}</td>
-      <td>${esc(item.category)}</td>
-      <td>${esc(String(item.quantity))} ${esc(item.unit)}</td>
-      <td>${fmtDate(item.purchaseDate)}</td>
-      <td>${fmtDate(item.expiryDate)}</td>
-      <td>${age}d</td>
-      <td>${dl}</td>
-      <td class="${sc}">${sl}</td>
-      <td>${esc(item.supplier||'—')}</td>
-      <td>${uc}</td>
-      <td>${tv}</td>
-    </tr>`;
+      <td>${esc(item.category)}</td><td>${esc(String(item.quantity))} ${esc(item.unit)}</td>
+      <td>${fmtDate(item.purchaseDate)}</td><td>${fmtDate(item.expiryDate)}</td>
+      <td>${age}d</td><td>${dl}</td><td class="ps-${s}">${sl}</td>
+      <td>${esc(item.supplier||'—')}</td><td>${uc}</td><td>${tv}</td></tr>`;
   }).join('');
 
   closeReportModal();
   setTimeout(() => window.print(), 150);
 }
 
-// ===== SETTINGS MODAL =====
+// ===== SETTINGS =====
 function openSettingsModal() {
-  document.getElementById('sRestaurant').value = sett.restaurant || '';
-  document.getElementById('sChef').value       = sett.chef || '';
-  document.getElementById('sOldPw').value      = '';
-  document.getElementById('sNewPw').value      = '';
-  document.getElementById('sConfPw').value     = '';
+  document.getElementById('sRestaurant').value = sett.restaurant||'';
+  document.getElementById('sChef').value       = sett.chef||'';
+  ['sOldPw','sNewPw','sConfPw'].forEach(id => { document.getElementById(id).value=''; });
   document.getElementById('settErr').classList.add('hidden');
   document.getElementById('settOk').classList.add('hidden');
   document.getElementById('settingsModal').classList.remove('hidden');
 }
 
-function closeSettingsModal() {
-  document.getElementById('settingsModal').classList.add('hidden');
-}
+function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
 
 function doSaveSettings() {
-  const err  = document.getElementById('settErr');
-  const ok   = document.getElementById('settOk');
+  const err=document.getElementById('settErr'), ok=document.getElementById('settOk');
   err.classList.add('hidden'); ok.classList.add('hidden');
-
   sett.restaurant = document.getElementById('sRestaurant').value.trim();
   sett.chef       = document.getElementById('sChef').value.trim();
-
-  const oldPw  = document.getElementById('sOldPw').value;
-  const newPw  = document.getElementById('sNewPw').value;
-  const confPw = document.getElementById('sConfPw').value;
-
-  if (newPw || oldPw) {
-    if (oldPw !== sett.password) {
-      err.textContent = 'Current password is incorrect.'; err.classList.remove('hidden'); return;
-    }
-    if (newPw.length < 6) {
-      err.textContent = 'New password must be at least 6 characters.'; err.classList.remove('hidden'); return;
-    }
-    if (newPw !== confPw) {
-      err.textContent = 'Passwords do not match.'; err.classList.remove('hidden'); return;
-    }
+  const oldPw=document.getElementById('sOldPw').value, newPw=document.getElementById('sNewPw').value, confPw=document.getElementById('sConfPw').value;
+  if (newPw||oldPw) {
+    if (oldPw!==sett.password) { err.textContent='Current password is incorrect.'; err.classList.remove('hidden'); return; }
+    if (newPw.length<6)        { err.textContent='New password must be at least 6 characters.'; err.classList.remove('hidden'); return; }
+    if (newPw!==confPw)        { err.textContent='Passwords do not match.'; err.classList.remove('hidden'); return; }
     sett.password = newPw;
   }
-
-  saveSettingsStore();
-  applySettingsToUI();
-  ok.classList.remove('hidden');
-  toast('Settings saved.');
+  saveSettingsStore(); applySettingsToUI();
+  ok.classList.remove('hidden'); toast('Settings saved.');
 }
 
 // ===== CLOCK =====
 function initClock() {
-  const el = document.getElementById('clock');
-  const tick = () => {
-    const n = new Date();
-    el.textContent = n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})
-      + '  ' + n.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  };
-  tick(); setInterval(tick, 1000);
+  const el=document.getElementById('clock');
+  const tick=()=>{ const n=new Date(); el.textContent=n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})+'  '+n.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); };
+  tick(); setInterval(tick,1000);
 }
 
 // ===== SEED DATA =====
 function seedData() {
-  const d = offset => {
-    const dt = new Date(); dt.setDate(dt.getDate() + offset);
-    return dt.toISOString().split('T')[0];
-  };
+  const d=o=>{ const dt=new Date(); dt.setDate(dt.getDate()+o); return dt.toISOString().split('T')[0]; };
+  const mk=(name,cat,qty,unit,pur,exp,sup,cost,notes)=>({id:uid(),name,category:cat,quantity:qty,unit,purchaseDate:d(pur),expiryDate:d(exp),supplier:sup,cost,notes,archived:false,archivedAt:null,archiveReason:null,archiveNote:''});
   return [
-    {id:uid(),name:'Roma Tomatoes',    category:'Produce',  quantity:8,   unit:'kg',      purchaseDate:d(-2), expiryDate:d(2),   supplier:'Local Farm',   cost:3.50,  notes:''},
-    {id:uid(),name:'Chicken Breast',   category:'Meat',     quantity:12,  unit:'kg',      purchaseDate:d(-1), expiryDate:d(1),   supplier:'Metro Meats',  cost:8.00,  notes:'Keep at 0-2°C'},
-    {id:uid(),name:'Whole Milk',        category:'Dairy',    quantity:20,  unit:'liters',  purchaseDate:d(-3), expiryDate:d(4),   supplier:'Dairy Co',     cost:1.20,  notes:''},
-    {id:uid(),name:'Atlantic Salmon',   category:'Seafood',  quantity:6,   unit:'kg',      purchaseDate:d(0),  expiryDate:d(0),   supplier:'Fish Market',  cost:22.00, notes:'USE TODAY'},
-    {id:uid(),name:'Parmesan Cheese',   category:'Dairy',    quantity:3,   unit:'kg',      purchaseDate:d(-8), expiryDate:d(-1),  supplier:'Cheese House', cost:18.00, notes:''},
-    {id:uid(),name:'Extra Virgin Olive Oil',category:'Dry Goods',quantity:12,unit:'liters',purchaseDate:d(-30),expiryDate:d(335), supplier:'Import Co',    cost:9.00,  notes:''},
-    {id:uid(),name:'Beef Tenderloin',   category:'Meat',     quantity:10,  unit:'kg',      purchaseDate:d(0),  expiryDate:d(3),   supplier:'Prime Cuts',   cost:35.00, notes:'Premium cut'},
-    {id:uid(),name:'Heavy Cream',       category:'Dairy',    quantity:8,   unit:'liters',  purchaseDate:d(-1), expiryDate:d(2),   supplier:'Dairy Co',     cost:4.50,  notes:''},
-    {id:uid(),name:'Fresh Basil',       category:'Produce',  quantity:500, unit:'g',       purchaseDate:d(-1), expiryDate:d(3),   supplier:'Herb Garden',  cost:6.00,  notes:'Keep moist'},
-    {id:uid(),name:'Chardonnay Wine',   category:'Beverages',quantity:6,   unit:'bottles', purchaseDate:d(-15),expiryDate:d(350), supplier:'Wine Cellar',  cost:25.00, notes:'For cooking'},
+    mk('Roma Tomatoes',   'Produce',  8,  'kg',     -2,  2,  'Local Farm',   3.50, ''),
+    mk('Chicken Breast',  'Meat',     12, 'kg',     -1,  1,  'Metro Meats',  8.00, 'Keep at 0-2°C'),
+    mk('Whole Milk',       'Dairy',    20, 'liters', -3,  4,  'Dairy Co',    1.20, ''),
+    mk('Atlantic Salmon',  'Seafood',  6,  'kg',      0,  0,  'Fish Market', 22.00,'USE TODAY'),
+    mk('Parmesan Cheese',  'Dairy',    3,  'kg',     -8, -1,  'Cheese House',18.00,''),
+    mk('Olive Oil',        'Dry Goods',12, 'liters', -30, 335,'Import Co',   9.00, ''),
+    mk('Beef Tenderloin',  'Meat',     10, 'kg',      0,  3,  'Prime Cuts',  35.00,'Premium cut'),
+    mk('Heavy Cream',      'Dairy',    8,  'liters', -1,  2,  'Dairy Co',    4.50, ''),
+    mk('Fresh Basil',      'Produce',  500,'g',      -1,  3,  'Herb Garden', 6.00, 'Keep moist'),
+    mk('Chardonnay Wine',  'Beverages',6,  'bottles',-15, 350,'Wine Cellar', 25.00,'For cooking'),
   ];
 }
 
 // ===== EVENT BINDING =====
 function bindAll() {
-  // Login
   const pwIn = document.getElementById('passwordInput');
   document.getElementById('loginBtn').addEventListener('click', doLogin);
   pwIn.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-  document.getElementById('togglePassword').addEventListener('click', () => {
-    const t = pwIn.type === 'text'; pwIn.type = t ? 'password' : 'text';
-  });
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    sessionStorage.removeItem(SK_SESSION); showLogin();
-  });
+  document.getElementById('togglePassword').addEventListener('click', () => { pwIn.type = pwIn.type==='text'?'password':'text'; });
+  document.getElementById('logoutBtn').addEventListener('click', () => { sessionStorage.removeItem(SK_SESSION); showLogin(); });
 
-  // Item CRUD
   document.getElementById('addItemBtn').addEventListener('click', openAdd);
   document.getElementById('closeModal').addEventListener('click', closeItemModal);
   document.getElementById('cancelModal').addEventListener('click', closeItemModal);
   document.getElementById('itemModal').addEventListener('click', e => { if(e.target.id==='itemModal') closeItemModal(); });
   document.getElementById('itemForm').addEventListener('submit', saveItem);
 
-  // Delete
-  document.getElementById('cancelDelete').addEventListener('click', closeDel);
-  document.getElementById('confirmDelete').addEventListener('click', confirmDel);
-  document.getElementById('deleteModal').addEventListener('click', e => { if(e.target.id==='deleteModal') closeDel(); });
+  // Archive modal
+  document.getElementById('closeArch').addEventListener('click', closeArch);
+  document.getElementById('cancelArch').addEventListener('click', closeArch);
+  document.getElementById('confirmArch').addEventListener('click', confirmArch);
+  document.getElementById('permDeleteBtn').addEventListener('click', permDeleteFromArchModal);
+  document.getElementById('archiveModal').addEventListener('click', e => { if(e.target.id==='archiveModal') closeArch(); });
+  document.querySelectorAll('.reason-opt').forEach(el => el.addEventListener('click', highlightReason));
 
-  // Filters
-  ['searchInput','categoryFilter','statusFilter','sortBy'].forEach(id => {
-    document.getElementById(id).addEventListener('input', renderAll);
+  // View tabs
+  document.getElementById('tabActive').addEventListener('click', () => {
+    showArchive = false;
+    document.getElementById('tabActive').classList.add('active');
+    document.getElementById('tabHistory').classList.remove('active');
+    document.getElementById('statusFilter').style.display = '';
+    renderAll();
+  });
+  document.getElementById('tabHistory').addEventListener('click', () => {
+    showArchive = true;
+    document.getElementById('tabHistory').classList.add('active');
+    document.getElementById('tabActive').classList.remove('active');
+    document.getElementById('statusFilter').style.display = 'none';
+    renderAll();
   });
 
-  // Alerts
-  document.getElementById('dismissAlert').addEventListener('click', () => {
-    document.getElementById('alertBanner').classList.add('hidden');
-  });
-  document.getElementById('notifBell').addEventListener('click', () => {
-    document.getElementById('alertBanner').classList.toggle('hidden');
-    renderAlerts();
-  });
+  ['searchInput','categoryFilter','statusFilter','sortBy'].forEach(id => document.getElementById(id).addEventListener('input', renderAll));
 
-  // Export / Import
+  document.getElementById('dismissAlert').addEventListener('click', () => document.getElementById('alertBanner').classList.add('hidden'));
+  document.getElementById('notifBell').addEventListener('click', () => { document.getElementById('alertBanner').classList.toggle('hidden'); renderAlerts(); });
+
   document.getElementById('exportBtn').addEventListener('click', exportData);
-  document.getElementById('importTrigger').addEventListener('click', () => {
-    document.getElementById('importFile').click();
-  });
-  document.getElementById('importFile').addEventListener('change', e => {
-    importData(e.target.files[0]);
-    e.target.value = '';
-  });
+  document.getElementById('importTrigger').addEventListener('click', () => document.getElementById('importFile').click());
+  document.getElementById('importFile').addEventListener('change', e => { importData(e.target.files[0]); e.target.value=''; });
 
-  // Reports
   document.getElementById('openReportBtn').addEventListener('click', openReportModal);
   document.getElementById('closeReport').addEventListener('click', closeReportModal);
   document.getElementById('cancelReport').addEventListener('click', closeReportModal);
@@ -1182,18 +1241,14 @@ function bindAll() {
   document.getElementById('genReportBtn').addEventListener('click', generateReport);
   document.getElementById('repStart').addEventListener('change', updateRepPreview);
   document.getElementById('repEnd').addEventListener('change', updateRepPreview);
+  document.querySelectorAll('.pill').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    repPer = btn.dataset.p;
+    document.getElementById('customRange').classList.toggle('hidden', repPer!=='custom');
+    updateRepPreview();
+  }));
 
-  document.querySelectorAll('.pill').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      repPer = btn.dataset.p;
-      document.getElementById('customRange').classList.toggle('hidden', repPer !== 'custom');
-      updateRepPreview();
-    });
-  });
-
-  // Settings
   document.getElementById('openSettingsBtn').addEventListener('click', openSettingsModal);
   document.getElementById('closeSettings').addEventListener('click', closeSettingsModal);
   document.getElementById('cancelSettings').addEventListener('click', closeSettingsModal);
@@ -1201,36 +1256,16 @@ function bindAll() {
   document.getElementById('saveSettings').addEventListener('click', doSaveSettings);
 }
 
-function doLogin() {
-  const pw  = document.getElementById('passwordInput').value;
-  const err = document.getElementById('loginError');
-  err.classList.add('hidden');
-  if (pw === sett.password) {
-    sessionStorage.setItem(SK_SESSION, '1');
-    document.getElementById('passwordInput').value = '';
-    showApp();
-  } else {
-    err.classList.remove('hidden');
-    document.getElementById('passwordInput').select();
-  }
-}
-
 // ===== HELPERS =====
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function fmtDate(ds) {
-  if (!ds) return '—';
-  const [y,m,d] = ds.split('-');
-  return `${parseInt(d)} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]} ${y}`;
-}
-function set(id, val, prop='textContent') { const el=document.getElementById(id); if(el) el[prop]=val; }
+function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtDate(ds) { if(!ds) return '—'; const [y,m,d]=ds.split('-'); return `${parseInt(d)} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]} ${y}`; }
+function set(id,val,prop='textContent') { const el=document.getElementById(id); if(el) el[prop]=val; }
 function toast(msg) {
-  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toastMsg').textContent=msg;
   document.getElementById('toast').classList.remove('hidden');
-  if (toastTmr) clearTimeout(toastTmr);
-  toastTmr = setTimeout(() => document.getElementById('toast').classList.add('hidden'), 3200);
+  if(toastTmr) clearTimeout(toastTmr);
+  toastTmr=setTimeout(()=>document.getElementById('toast').classList.add('hidden'),3200);
 }
 </script>
 </body>
