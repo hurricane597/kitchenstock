@@ -97,10 +97,10 @@ textarea{resize:vertical;min-height:64px}
 .stat-label{font-size:11px;color:var(--tx2);margin-top:4px;text-transform:uppercase;letter-spacing:.4px}
 
 /* CONTROLS */
-.controls-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.controls-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1}
-.controls-right{display:flex;gap:8px}
-.search-box{position:relative;min-width:200px}
+.controls-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.search-box{position:relative;min-width:200px;flex-shrink:0}
+.filters-row{display:flex;gap:8px;flex:1;flex-wrap:wrap}
+.bottom-bar{display:flex;align-items:center;gap:8px;margin-left:auto}
 .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:13px;pointer-events:none}
 .search-input{padding-left:32px}
 .select-input{min-width:130px;max-width:170px}
@@ -200,8 +200,150 @@ textarea{resize:vertical;min-height:64px}
 
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-@media(max-width:960px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.form-row{grid-template-columns:1fr}.main-content{padding:16px}.header{padding:0 16px}.clock{display:none}}
+/* MOBILE DRAWER */
+.mob-menu-btn{display:none;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer;color:var(--tx);align-items:center;justify-content:center;flex-shrink:0}
+.mob-drawer{position:fixed;inset:0;z-index:300;pointer-events:none}
+.mob-drawer.open{pointer-events:all}
+.mob-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
+.mob-drawer.open .mob-backdrop{opacity:1}
+.mob-panel{position:absolute;top:60px;right:0;width:200px;background:var(--bg2);border-left:1px solid var(--border);border-bottom:1px solid var(--border);border-bottom-left-radius:var(--radius);padding:10px;display:flex;flex-direction:column;gap:6px;transform:translateX(100%);transition:transform .25s}
+.mob-drawer.open .mob-panel{transform:translateX(0)}
+.mob-panel .hdr-btn{width:100%;text-align:left;padding:10px 14px}
+
+@media(max-width:960px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:640px){
+  /* Header */
+  .header{padding:0 12px;height:54px}
+  .header-sub{display:none}
+  .clock{display:none}
+  .hdr-btn{display:none}
+  .mob-menu-btn{display:flex}
+  .header-name{font-size:14px}
+
+  /* Login */
+  .login-card{padding:28px 20px;margin:12px}
+  .login-brand h1{font-size:22px}
+
+  /* Stats */
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+  .stat-card{padding:12px 10px;gap:10px}
+  .stat-icon{width:34px;height:34px;font-size:13px}
+  .stat-value{font-size:20px}
+  .stat-label{font-size:10px}
+
+  /* Main */
+  .main-content{padding:12px}
+
+  /* Controls */
+  .controls-bar{flex-direction:column;align-items:stretch;gap:8px;margin-bottom:12px}
+  .search-box{min-width:0;width:100%}
+  .filters-row{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .filters-row .select-input{min-width:120px;max-width:none;flex-shrink:0}
+  .bottom-bar{display:flex;align-items:center;gap:8px;justify-content:space-between}
+  .bottom-bar .btn{white-space:nowrap}
+
+  /* Table → Cards */
+  .table-wrapper{background:transparent;border:none;border-radius:0;overflow:visible}
+  .inv-table{display:block}
+  .inv-table thead{display:none}
+  .inv-table tbody{display:flex;flex-direction:column;gap:10px}
+  .inv-table tbody tr{
+    display:grid;
+    grid-template-columns:1fr auto;
+    grid-template-rows:auto auto auto auto;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:14px;
+    gap:0;
+  }
+  .inv-table tbody tr.row-expired{border-left:3px solid var(--red);animation:none;background:rgba(239,68,68,.06)}
+  .inv-table tbody tr.row-critical{border-left:3px solid var(--orange)}
+  .inv-table tbody tr.row-warning{border-left:3px solid var(--yellow)}
+  .inv-table tbody tr.row-archived{border-left:3px solid var(--border2)}
+  .inv-table tbody td{display:none;padding:0;border:none;font-size:13px}
+
+  /* Row 1: Name (col 1) + Status badge (col 2) */
+  .inv-table tbody td:nth-child(1){
+    display:block;grid-column:1;grid-row:1;
+    padding-bottom:10px;margin-bottom:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .inv-table tbody td:nth-child(8){
+    display:flex;align-items:flex-start;justify-content:flex-end;
+    grid-column:2;grid-row:1;
+    padding-bottom:10px;margin-bottom:8px;
+    border-bottom:1px solid var(--border);
+    padding-left:8px;
+  }
+  /* Row 2: Category (col 1) + Expires (col 2) */
+  .inv-table tbody td:nth-child(2){
+    display:flex;flex-direction:column;
+    grid-column:1;grid-row:2;padding:5px 0;
+  }
+  .inv-table tbody td:nth-child(5){
+    display:flex;flex-direction:column;align-items:flex-end;
+    grid-column:2;grid-row:2;padding:5px 0;
+  }
+  /* Row 3: Quantity (col 1) + Days Left / Archived On (col 2) */
+  .inv-table tbody td:nth-child(3){
+    display:flex;flex-direction:column;
+    grid-column:1;grid-row:3;padding:5px 0;color:var(--tx2);
+  }
+  .inv-table tbody td:nth-child(7){
+    display:flex;flex-direction:column;align-items:flex-end;
+    grid-column:2;grid-row:3;padding:5px 0;
+  }
+  /* Row 4: Actions full width */
+  .inv-table tbody td:nth-child(9){
+    display:flex;
+    grid-column:1/3;grid-row:4;
+    padding-top:10px;margin-top:8px;
+    border-top:1px solid var(--border);
+    justify-content:flex-end;
+  }
+
+  /* Pseudo-labels for card rows */
+  .inv-table tbody td:nth-child(2)::before{content:"Category";display:block;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+  .inv-table tbody td:nth-child(5)::before{content:"Expires";display:block;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+  .inv-table tbody td:nth-child(3)::before{content:"Quantity";display:block;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+  .inv-table tbody td:nth-child(7)::before{content:attr(data-mob-lbl);display:block;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+
+  /* Action buttons fill row on mobile */
+  .action-btns{width:100%;gap:8px}
+  .btn-icon{flex:1;text-align:center;padding:9px 8px;font-size:13px}
+
+  /* Alert banner */
+  .alert-banner{padding:10px 12px;font-size:12px}
+
+  /* Modals — slide up from bottom */
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal-card{border-radius:var(--radius) var(--radius) 0 0;max-height:92dvh;max-width:100%;animation:slideUp .25s ease}
+  .modal-sm{max-width:100%}
+  .modal-body{padding:16px;gap:12px}
+  .modal-hdr{padding:14px 16px}
+  .form-row{grid-template-columns:1fr}
+  .modal-ftr{flex-wrap:wrap}
+  .modal-ftr .btn{flex:1;min-width:120px}
+
+  /* Archive modal footer stacks on very small screens */
+  #archiveModal .modal-ftr{flex-direction:column}
+  #archiveModal .modal-ftr>*{width:100%}
+  #archiveModal .modal-ftr>div{display:flex;gap:8px}
+  #archiveModal .modal-ftr>div .btn{flex:1}
+
+  /* Toast */
+  .toast{bottom:12px;left:12px;right:12px;max-width:none;text-align:center}
+
+  /* Footer */
+  .page-footer{flex-direction:column;gap:4px;font-size:11px}
+
+  /* Empty state */
+  .empty-state{padding:40px 16px}
+}
 
 /* PRINT */
 @media print{
@@ -277,15 +419,28 @@ textarea{resize:vertical;min-height:64px}
     </div>
     <div class="header-right">
       <div id="clock" class="clock"></div>
-      <button id="notifBell" class="notif-bell" title="Alerts">ALT<span id="notifCount" class="notif-badge hidden">0</span></button>
+      <button id="notifBell" class="notif-bell" title="Alerts">&#128276;<span id="notifCount" class="notif-badge hidden">0</span></button>
       <button class="hdr-btn" id="exportBtn">Export</button>
       <button class="hdr-btn" id="importTrigger">Import</button>
       <input type="file" id="importFile" accept=".json" class="hidden"/>
       <button class="hdr-btn" id="openReportBtn">Report</button>
       <button class="hdr-btn" id="openSettingsBtn">Settings</button>
       <button class="hdr-btn" id="logoutBtn">Logout</button>
+      <button id="mobMenuBtn" class="mob-menu-btn" aria-label="Menu">&#9776;</button>
     </div>
   </header>
+
+  <!-- MOBILE DRAWER -->
+  <div id="mobDrawer" class="mob-drawer">
+    <div class="mob-backdrop" id="mobBackdrop"></div>
+    <div class="mob-panel">
+      <button class="hdr-btn" id="mobExportBtn">&#128190; Export</button>
+      <button class="hdr-btn" id="mobImportBtn">&#128228; Import</button>
+      <button class="hdr-btn" id="mobReportBtn">&#128196; Report</button>
+      <button class="hdr-btn" id="mobSettingsBtn">&#9881; Settings</button>
+      <button class="hdr-btn" id="mobLogoutBtn">&#8594; Logout</button>
+    </div>
+  </div>
 
   <div id="alertBanner" class="alert-banner hidden">
     <span class="alert-pulse"></span>
@@ -314,11 +469,11 @@ textarea{resize:vertical;min-height:64px}
     </section>
 
     <div class="controls-bar">
-      <div class="controls-left">
-        <div class="search-box">
-          <span class="search-icon">&#128269;</span>
-          <input type="text" id="searchInput" placeholder="Search items..." class="search-input"/>
-        </div>
+      <div class="search-box">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="searchInput" placeholder="Search items..." class="search-input"/>
+      </div>
+      <div class="filters-row">
         <select id="categoryFilter" class="select-input">
           <option value="all">All Categories</option>
           <option value="Produce">Produce</option><option value="Dairy">Dairy</option>
@@ -339,12 +494,12 @@ textarea{resize:vertical;min-height:64px}
           <option value="status">Sort: Status</option>
           <option value="archived">Sort: Archived On</option>
         </select>
+      </div>
+      <div class="bottom-bar">
         <div class="view-tabs">
           <button id="tabActive" class="view-tab active">Active</button>
           <button id="tabHistory" class="view-tab">History <span id="archCount" class="arch-count">0</span></button>
         </div>
-      </div>
-      <div class="controls-right">
         <button id="addItemBtn" class="btn btn-primary">+ Add Item</button>
       </div>
     </div>
@@ -758,7 +913,7 @@ function buildRow(item) {
       <td>${fmtDate(item.purchaseDate)}</td>
       <td>${fmtDate(item.expiryDate)}</td>
       <td style="color:var(--tx3)">${age}d</td>
-      <td style="color:var(--tx2)">${fmtDate(item.archivedAt||'')}</td>
+      <td data-mob-lbl="Archived On" style="color:var(--tx2)">${fmtDate(item.archivedAt||'')}</td>
       <td><span class="badge badge-archived">${rl}</span></td>
       <td><div class="action-btns">
         <button class="btn-icon btn-icon-restore" onclick="restoreItem('${item.id}')">Restore</button>
@@ -779,7 +934,7 @@ function buildRow(item) {
     <td>${fmtDate(item.purchaseDate)}</td>
     <td>${fmtDate(item.expiryDate)}</td>
     <td style="color:var(--tx3)">${age}d</td>
-    <td class="days-${s}">${dl}</td>
+    <td class="days-${s}" data-mob-lbl="Days Left">${dl}</td>
     <td><span class="badge badge-${s}">${bl}</span></td>
     <td><div class="action-btns">
       <button class="btn-icon" onclick="openEdit('${item.id}')">Edit</button>
@@ -1254,6 +1409,18 @@ function bindAll() {
   document.getElementById('cancelSettings').addEventListener('click', closeSettingsModal);
   document.getElementById('settingsModal').addEventListener('click', e => { if(e.target.id==='settingsModal') closeSettingsModal(); });
   document.getElementById('saveSettings').addEventListener('click', doSaveSettings);
+
+  // Mobile drawer
+  const drawer = document.getElementById('mobDrawer');
+  function openMobMenu()  { drawer.classList.add('open'); }
+  function closeMobMenu() { drawer.classList.remove('open'); }
+  document.getElementById('mobMenuBtn').addEventListener('click', openMobMenu);
+  document.getElementById('mobBackdrop').addEventListener('click', closeMobMenu);
+  document.getElementById('mobExportBtn').addEventListener('click',   () => { closeMobMenu(); exportData(); });
+  document.getElementById('mobImportBtn').addEventListener('click',   () => { closeMobMenu(); document.getElementById('importFile').click(); });
+  document.getElementById('mobReportBtn').addEventListener('click',   () => { closeMobMenu(); openReportModal(); });
+  document.getElementById('mobSettingsBtn').addEventListener('click', () => { closeMobMenu(); openSettingsModal(); });
+  document.getElementById('mobLogoutBtn').addEventListener('click',   () => { closeMobMenu(); sessionStorage.removeItem(SK_SESSION); showLogin(); });
 }
 
 // ===== HELPERS =====
