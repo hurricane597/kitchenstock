@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KitchenStock — Kitchen Inventory</title>
+<style>
+/* ===== RESET ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f172a;--bg2:#1e293b;--bg3:#263348;
+  --border:#334155;--border2:#475569;
+  --tx:#f1f5f9;--tx2:#94a3b8;--tx3:#64748b;
+  --green:#10b981;--green-bg:rgba(16,185,129,.12);
+  --yellow:#f59e0b;--yellow-bg:rgba(245,158,11,.12);
+  --orange:#f97316;--orange-bg:rgba(249,115,22,.12);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.12);
+  --blue:#3b82f6;--blue-bg:rgba(59,130,246,.12);
+  --radius:10px;--radius-sm:6px;
+  --shadow:0 4px 24px rgba(0,0,0,.45);
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;line-height:1.5}
+
+/* ===== LOGIN ===== */
+.login-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:1000}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:40px 36px;width:100%;max-width:420px;box-shadow:var(--shadow)}
+.login-brand{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.login-brand h1{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.login-sub{color:var(--tx2);font-size:13px;margin-bottom:28px}
+.brand-icon{width:48px;height:48px;background:var(--green);color:#fff;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0}
+.brand-icon-sm{width:34px;height:34px;font-size:15px}
+.input-with-toggle{position:relative;display:flex}
+.input-with-toggle input{flex:1;padding-right:44px}
+.toggle-pw{position:absolute;right:0;top:0;bottom:0;width:42px;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:11px;letter-spacing:1px;display:flex;align-items:center;justify-content:center;transition:color .2s}
+.toggle-pw:hover{color:var(--tx)}
+.hint-text{margin-top:14px;font-size:12px;color:var(--tx3);text-align:center}
+.code-hint{background:var(--bg3);padding:2px 8px;border-radius:4px;font-family:monospace;color:var(--green);font-size:13px}
+
+/* ===== FORM ELEMENTS ===== */
+.form-group{display:flex;flex-direction:column;gap:6px;flex:1}
+.form-group label{font-size:11px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px}
+.req{color:var(--red)}
+input[type=text],input[type=password],input[type=number],input[type=date],select,textarea{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--tx);font-family:var(--font);font-size:14px;padding:9px 12px;width:100%;transition:border-color .2s,box-shadow .2s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+input::placeholder,textarea::placeholder{color:var(--tx3)}
+select option{background:var(--bg2)}
+textarea{resize:vertical;min-height:64px}
+.divider{border:none;border-top:1px solid var(--border);margin:8px 0}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid transparent;transition:background .2s,border-color .2s,opacity .2s,transform .1s;white-space:nowrap;user-select:none}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-primary:hover{background:#0ea572;border-color:#0ea572}
+.btn-outline{background:transparent;color:var(--tx2);border-color:var(--border2)}
+.btn-outline:hover{background:var(--bg3);color:var(--tx)}
+.btn-ghost{background:var(--bg3);color:var(--tx2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--border);color:var(--tx)}
+.btn-danger{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-danger:hover{background:#dc2626}
+.btn-full{width:100%;margin-top:8px}
+.btn-sm{padding:6px 12px;font-size:13px}
+
+/* ===== HEADER ===== */
+.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-title{display:flex;flex-direction:column}
+.header-name{font-size:16px;font-weight:700;letter-spacing:-.3px}
+.header-sub{font-size:11px;color:var(--tx3)}
+.header-right{display:flex;align-items:center;gap:10px}
+.clock{font-size:12px;font-weight:600;color:var(--tx2);font-variant-numeric:tabular-nums;min-width:130px;text-align:right}
+.notif-bell{position:relative;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 10px;cursor:pointer;color:var(--tx2);font-size:13px;font-weight:700;font-family:var(--font);transition:background .2s}
+.notif-bell:hover{background:var(--border)}
+.notif-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;border-radius:10px;padding:2px 5px;font-size:10px;font-weight:700;min-width:17px;text-align:center}
+.hdr-btn{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 12px;font-size:13px;font-weight:600;font-family:var(--font);color:var(--tx2);cursor:pointer;transition:background .2s,color .2s}
+.hdr-btn:hover{background:var(--border);color:var(--tx)}
+
+/* ===== ALERT BANNER ===== */
+.alert-banner{background:rgba(239,68,68,.1);border-bottom:2px solid var(--red);padding:10px 24px;display:flex;align-items:center;gap:12px}
+.alert-pulse{width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.5s infinite}
+.alert-content{flex:1;font-size:13px}
+.alert-content strong{color:var(--red)}
+.dismiss-btn{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:14px;padding:4px;transition:color .2s}
+.dismiss-btn:hover{color:var(--tx)}
+
+/* ===== MAIN ===== */
+.main-content{padding:24px;max-width:1400px;margin:0 auto}
+
+/* ===== STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;align-items:center;gap:16px;transition:border-color .2s}
+.stat-card:hover{border-color:var(--border2)}
+.stat-fresh{border-left:3px solid var(--green)}
+.stat-warn{border-left:3px solid var(--yellow)}
+.stat-danger{border-left:3px solid var(--red)}
+.stat-icon{width:44px;height:44px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.icon-blue{background:var(--blue-bg);color:var(--blue)}
+.icon-green{background:var(--green-bg);color:var(--green)}
+.icon-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.icon-red{background:var(--red-bg);color:var(--red)}
+.stat-body{display:flex;flex-direction:column}
+.stat-value{font-size:28px;font-weight:700;letter-spacing:-1px;line-height:1}
+.stat-label{font-size:11px;color:var(--tx2);margin-top:4px;text-transform:uppercase;letter-spacing:.4px}
+
+/* ===== CONTROLS ===== */
+.controls-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.controls-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1}
+.controls-right{display:flex;gap:8px}
+.search-box{position:relative;min-width:200px}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:13px;pointer-events:none}
+.search-input{padding-left:32px}
+.select-input{min-width:130px;max-width:170px}
+
+/* ===== TABLE ===== */
+.table-wrapper{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.inv-table{width:100%;border-collapse:collapse}
+.inv-table thead tr{background:var(--bg3);border-bottom:1px solid var(--border)}
+.inv-table th{padding:11px 14px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--tx2);white-space:nowrap}
+.inv-table tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+.inv-table tbody tr:last-child{border-bottom:none}
+.inv-table tbody tr:hover{background:var(--bg3)}
+.inv-table td{padding:12px 14px;font-size:13px;vertical-align:middle}
+.item-name{font-weight:600}
+.item-supplier{display:block;font-size:11px;color:var(--tx3);margin-top:2px}
+.row-expired{background:rgba(239,68,68,.06);animation:rowAlarm 3s ease-in-out infinite}
+.row-critical{background:rgba(249,115,22,.06)}
+.row-warning{background:rgba(245,158,11,.04)}
+.row-expired:hover{background:rgba(239,68,68,.12)!important}
+.row-critical:hover{background:rgba(249,115,22,.12)!important}
+
+/* ===== BADGES ===== */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.badge-fresh{background:var(--green-bg);color:var(--green)}.badge-fresh::before{background:var(--green)}
+.badge-warning{background:var(--yellow-bg);color:var(--yellow)}.badge-warning::before{background:var(--yellow);animation:pulse 1.5s infinite}
+.badge-critical{background:var(--orange-bg);color:var(--orange)}.badge-critical::before{background:var(--orange);animation:pulse 1s infinite}
+.badge-expired{background:var(--red-bg);color:var(--red)}.badge-expired::before{background:var(--red);animation:pulse .8s infinite}
+.cat-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:var(--bg3);color:var(--tx2);border:1px solid var(--border)}
+.days-fresh{color:var(--green);font-weight:700}
+.days-warning{color:var(--yellow);font-weight:700}
+.days-critical{color:var(--orange);font-weight:700}
+.days-expired{color:var(--red);font-weight:700}
+.action-btns{display:flex;gap:6px}
+.btn-icon{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--tx2);cursor:pointer;font-size:12px;padding:5px 10px;font-family:var(--font);font-weight:600;transition:background .2s,color .2s,border-color .2s}
+.btn-icon:hover{background:var(--border);color:var(--tx)}
+.btn-icon-del:hover{background:var(--red-bg);color:var(--red);border-color:var(--red)}
+.empty-state{padding:60px 24px;text-align:center;color:var(--tx2)}
+.empty-icon{font-size:40px;margin-bottom:16px;opacity:.4}
+.empty-sub{font-size:13px;color:var(--tx3);margin-top:6px}
+.page-footer{margin-top:24px;display:flex;justify-content:space-between;font-size:12px;color:var(--tx3)}
+
+/* ===== MODALS ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:500;padding:20px;animation:fadeIn .2s ease}
+.modal-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:620px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow);animation:slideUp .25s ease}
+.modal-sm{max-width:420px}
+.modal-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-hdr h3{font-size:17px;font-weight:700}
+.close-btn{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background .2s,color .2s}
+.close-btn:hover{background:var(--bg3);color:var(--tx)}
+.modal-body{padding:24px;display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.modal-ftr{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+.msg-error{color:var(--red);font-size:13px;background:var(--red-bg);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid rgba(239,68,68,.3)}
+.msg-success{color:var(--green);font-size:13px;background:var(--green-bg);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid rgba(16,185,129,.3)}
+
+/* ===== PERIOD PILLS ===== */
+.period-pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{padding:5px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--bg3);color:var(--tx2);cursor:pointer;font-size:12px;font-family:var(--font);font-weight:600;transition:all .2s}
+.pill:hover{border-color:var(--green);color:var(--green)}
+.pill.active{background:var(--green);color:#fff;border-color:var(--green)}
+.report-preview{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--tx2)}
+.report-preview strong{color:var(--tx)}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px 20px;font-size:13px;font-weight:600;color:var(--tx);box-shadow:var(--shadow);z-index:9999;animation:slideRight .3s ease;max-width:320px}
+
+/* ===== UTILITY ===== */
+.hidden{display:none!important}
+.app{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.main-content{flex:1;overflow-y:auto}
+#printView{display:none}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideRight{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+@keyframes rowAlarm{0%,100%{border-left:3px solid transparent}50%{border-left:3px solid var(--red)}}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--tx3)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:960px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.form-row{grid-template-columns:1fr}.main-content{padding:16px}.header{padding:0 16px}.clock{display:none}}
+
+/* ===== PRINT STYLES ===== */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body>*:not(#printView){display:none!important}
+  #printView{display:block!important;font-family:Arial,sans-serif;color:#1e293b;background:#fff;padding:0;margin:0}
+  @page{margin:18mm 14mm;size:A4 landscape}
+
+  .pr-wrap{padding:0}
+  .pr-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #0f172a;padding-bottom:16px;margin-bottom:20px}
+  .pr-brand{display:flex;align-items:center;gap:12px}
+  .pr-brand-icon{width:44px;height:44px;background:#10b981;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800}
+  .pr-brand-text h1{font-size:22px;font-weight:800;color:#0f172a;margin:0}
+  .pr-brand-text p{font-size:13px;color:#475569;margin:2px 0 0}
+  .pr-meta{text-align:right;font-size:11px;color:#475569;line-height:1.9}
+  .pr-meta strong{color:#1e293b}
+
+  .pr-summary{display:flex;gap:12px;margin-bottom:20px}
+  .pr-stat{flex:1;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;text-align:center}
+  .pr-stat-val{display:block;font-size:22px;font-weight:700;color:#0f172a;line-height:1}
+  .pr-stat-lbl{display:block;font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+  .pr-stat.s-warn{border-color:#f59e0b}.pr-stat.s-warn .pr-stat-val{color:#92400e}
+  .pr-stat.s-red{border-color:#ef4444}.pr-stat.s-red .pr-stat-val{color:#991b1b}
+  .pr-stat.s-green{border-color:#10b981}.pr-stat.s-green .pr-stat-val{color:#065f46}
+  .pr-stat.s-blue{border-color:#3b82f6}.pr-stat.s-blue .pr-stat-val{color:#1e40af}
+
+  .pr-table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:20px}
+  .pr-table th{background:#0f172a;color:#fff;padding:8px 10px;text-align:left;font-weight:700;text-transform:uppercase;font-size:9px;letter-spacing:.5px}
+  .pr-table td{padding:7px 10px;border-bottom:1px solid #e2e8f0;vertical-align:middle}
+  .pr-table tbody tr:nth-child(even){background:#f8fafc}
+  .pr-table tbody tr:last-child td{border-bottom:none}
+  .pr-table tr{page-break-inside:avoid}
+
+  .ps-fresh{color:#065f46;font-weight:700}
+  .ps-warning{color:#92400e;font-weight:700}
+  .ps-critical{color:#9a3412;font-weight:700}
+  .ps-expired{color:#991b1b;font-weight:700;background:#fef2f2;padding:2px 6px;border-radius:3px}
+
+  .pr-footer{border-top:1px solid #e2e8f0;padding-top:12px;display:flex;justify-content:space-between;font-size:9px;color:#94a3b8}
+  .pr-section-title{font-size:13px;font-weight:700;color:#0f172a;border-left:4px solid #10b981;padding-left:10px;margin:0 0 12px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="loginScreen" class="login-overlay">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-icon">KS</div>
+      <h1>KitchenStock</h1>
+    </div>
+    <p class="login-sub">Head Chef Access Only</p>
+    <div class="form-group">
+      <label for="passwordInput">Chef Password</label>
+      <div class="input-with-toggle">
+        <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="current-password"/>
+        <button type="button" id="togglePassword" class="toggle-pw">SHOW</button>
+      </div>
+    </div>
+    <p id="loginError" class="msg-error hidden">Incorrect password. Please try again.</p>
+    <button id="loginBtn" class="btn btn-primary btn-full">Enter Dashboard</button>
+    <p class="hint-text">Default password: <span class="code-hint">chef1234</span></p>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="app" class="app hidden">
+  <header class="header">
+    <div class="header-left">
+      <div class="brand-icon brand-icon-sm">KS</div>
+      <div class="header-title">
+        <span class="header-name" id="headerRestaurant">KitchenStock</span>
+        <span class="header-sub">Kitchen Inventory Management</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div id="clock" class="clock"></div>
+      <button id="notifBell" class="notif-bell" title="Alerts">ALT<span id="notifCount" class="notif-badge hidden">0</span></button>
+      <button class="hdr-btn" id="exportBtn" title="Export data to JSON">Export</button>
+      <button class="hdr-btn" id="importTrigger" title="Import data from JSON">Import</button>
+      <input type="file" id="importFile" accept=".json" class="hidden"/>
+      <button class="hdr-btn" id="openReportBtn">Report</button>
+      <button class="hdr-btn" id="openSettingsBtn">Settings</button>
+      <button class="hdr-btn" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <div id="alertBanner" class="alert-banner hidden">
+    <span class="alert-pulse"></span>
+    <div id="alertContent" class="alert-content"></div>
+    <button id="dismissAlert" class="dismiss-btn">&#10005;</button>
+  </div>
+
+  <main class="main-content">
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">&#9632;</div>
+        <div class="stat-body"><span class="stat-value" id="statTotal">0</span><span class="stat-label">Total Items</span></div>
+      </div>
+      <div class="stat-card stat-fresh">
+        <div class="stat-icon icon-green">&#9632;</div>
+        <div class="stat-body"><span class="stat-value" id="statFresh">0</span><span class="stat-label">Fresh</span></div>
+      </div>
+      <div class="stat-card stat-warn">
+        <div class="stat-icon icon-yellow">&#9632;</div>
+        <div class="stat-body"><span class="stat-value" id="statWarning">0</span><span class="stat-label">Expiring Soon</span></div>
+      </div>
+      <div class="stat-card stat-danger">
+        <div class="stat-icon icon-red">&#9632;</div>
+        <div class="stat-body"><span class="stat-value" id="statExpired">0</span><span class="stat-label">Expired / Critical</span></div>
+      </div>
+    </section>
+
+    <div class="controls-bar">
+      <div class="controls-left">
+        <div class="search-box">
+          <span class="search-icon">&#128269;</span>
+          <input type="text" id="searchInput" placeholder="Search items..." class="search-input"/>
+        </div>
+        <select id="categoryFilter" class="select-input">
+          <option value="all">All Categories</option>
+          <option value="Produce">Produce</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Meat">Meat</option>
+          <option value="Seafood">Seafood</option>
+          <option value="Dry Goods">Dry Goods</option>
+          <option value="Beverages">Beverages</option>
+          <option value="Spices">Spices</option>
+          <option value="Other">Other</option>
+        </select>
+        <select id="statusFilter" class="select-input">
+          <option value="all">All Status</option>
+          <option value="fresh">Fresh</option>
+          <option value="warning">Expiring Soon</option>
+          <option value="critical">Critical</option>
+          <option value="expired">Expired</option>
+        </select>
+        <select id="sortBy" class="select-input">
+          <option value="expiry">Sort: Expiry Date</option>
+          <option value="name">Sort: Name</option>
+          <option value="category">Sort: Category</option>
+          <option value="purchase">Sort: Purchased</option>
+          <option value="status">Sort: Status</option>
+        </select>
+      </div>
+      <div class="controls-right">
+        <button id="addItemBtn" class="btn btn-primary">+ Add Item</button>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="inv-table">
+        <thead>
+          <tr>
+            <th>Item Name</th><th>Category</th><th>Quantity</th>
+            <th>Purchased</th><th>Expires</th><th>Age</th>
+            <th>Days Left</th><th>Status</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryBody"></tbody>
+      </table>
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon">&#128230;</div>
+        <p>No items found.</p>
+        <p class="empty-sub">Add your first inventory item using the button above.</p>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <span>KitchenStock v2.0 &mdash; Self-Contained Edition</span>
+      <span id="footerTs"></span>
+    </footer>
+  </main>
+</div>
+
+<!-- ===== ITEM MODAL ===== -->
+<div id="itemModal" class="modal-overlay hidden">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3 id="modalTitle">Add New Item</h3>
+      <button id="closeModal" class="close-btn">&#10005;</button>
+    </div>
+    <form id="itemForm" class="modal-body" novalidate>
+      <div class="form-row">
+        <div class="form-group"><label>Item Name <span class="req">*</span></label><input type="text" id="fName" placeholder="e.g. Fresh Tomatoes"/></div>
+        <div class="form-group"><label>Category <span class="req">*</span></label>
+          <select id="fCategory">
+            <option value="">Select category</option>
+            <option value="Produce">Produce</option><option value="Dairy">Dairy</option>
+            <option value="Meat">Meat</option><option value="Seafood">Seafood</option>
+            <option value="Dry Goods">Dry Goods</option><option value="Beverages">Beverages</option>
+            <option value="Spices">Spices</option><option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Quantity <span class="req">*</span></label><input type="number" id="fQty" placeholder="e.g. 10" min="0" step="0.01"/></div>
+        <div class="form-group"><label>Unit <span class="req">*</span></label>
+          <select id="fUnit">
+            <option value="">Select unit</option>
+            <option value="kg">kg</option><option value="g">g</option><option value="lbs">lbs</option>
+            <option value="oz">oz</option><option value="liters">liters</option><option value="ml">ml</option>
+            <option value="pieces">pieces</option><option value="bottles">bottles</option>
+            <option value="cans">cans</option><option value="bags">bags</option><option value="boxes">boxes</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Purchase Date <span class="req">*</span></label><input type="date" id="fPurchase"/></div>
+        <div class="form-group"><label>Expiry Date <span class="req">*</span></label><input type="date" id="fExpiry"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Supplier</label><input type="text" id="fSupplier" placeholder="e.g. Local Farm"/></div>
+        <div class="form-group"><label>Cost per Unit ($)</label><input type="number" id="fCost" placeholder="0.00" min="0" step="0.01"/></div>
+      </div>
+      <div class="form-group"><label>Notes</label><textarea id="fNotes" placeholder="Storage instructions, allergens..."></textarea></div>
+      <p id="formError" class="msg-error hidden"></p>
+      <div class="modal-ftr">
+        <button type="button" id="cancelModal" class="btn btn-outline">Cancel</button>
+        <button type="submit" id="saveBtn" class="btn btn-primary">Save Item</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== DELETE MODAL ===== -->
+<div id="deleteModal" class="modal-overlay hidden">
+  <div class="modal-card modal-sm">
+    <div class="modal-hdr"><h3>Remove Item</h3></div>
+    <div class="modal-body">
+      <p>Remove <strong id="delItemName"></strong> from inventory?</p>
+      <p class="hint-text">This action cannot be undone.</p>
+      <div class="modal-ftr">
+        <button id="cancelDelete" class="btn btn-outline">Cancel</button>
+        <button id="confirmDelete" class="btn btn-danger">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REPORT MODAL ===== -->
+<div id="reportModal" class="modal-overlay hidden">
+  <div class="modal-card" style="max-width:560px">
+    <div class="modal-hdr">
+      <h3>Generate Inventory Report</h3>
+      <button class="close-btn" id="closeReport">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Report Type</label>
+        <select id="repType">
+          <option value="current">Current Inventory Snapshot</option>
+          <option value="expiring">Items Expiring in Period</option>
+          <option value="purchased">Items Purchased in Period</option>
+          <option value="waste">Waste Report (Expired Items)</option>
+        </select>
+      </div>
+      <div id="periodSection" class="form-group">
+        <label>Time Period</label>
+        <div class="period-pills">
+          <button class="pill" data-p="today">Today</button>
+          <button class="pill active" data-p="week">This Week</button>
+          <button class="pill" data-p="month">This Month</button>
+          <button class="pill" data-p="quarter">This Quarter</button>
+          <button class="pill" data-p="half">6 Months</button>
+          <button class="pill" data-p="year">This Year</button>
+          <button class="pill" data-p="custom">Custom</button>
+        </div>
+      </div>
+      <div id="customRange" class="form-row hidden">
+        <div class="form-group"><label>From</label><input type="date" id="repStart"/></div>
+        <div class="form-group"><label>To</label><input type="date" id="repEnd"/></div>
+      </div>
+      <div class="report-preview" id="repPreview">Select options above to preview the report.</div>
+      <div class="modal-ftr">
+        <button class="btn btn-outline" id="cancelReport">Cancel</button>
+        <button class="btn btn-primary" id="genReportBtn">Generate PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SETTINGS MODAL ===== -->
+<div id="settingsModal" class="modal-overlay hidden">
+  <div class="modal-card modal-sm">
+    <div class="modal-hdr">
+      <h3>Settings</h3>
+      <button class="close-btn" id="closeSettings">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Restaurant Name</label><input type="text" id="sRestaurant" placeholder="e.g. The Grand Kitchen"/></div>
+      <div class="form-group"><label>Head Chef Name</label><input type="text" id="sChef" placeholder="e.g. Chef Gordon"/></div>
+      <hr class="divider"/>
+      <div class="form-group"><label>Current Password</label><input type="password" id="sOldPw" placeholder="Current password"/></div>
+      <div class="form-group"><label>New Password</label><input type="password" id="sNewPw" placeholder="Leave blank to keep current"/></div>
+      <div class="form-group"><label>Confirm New Password</label><input type="password" id="sConfPw" placeholder="Repeat new password"/></div>
+      <p id="settErr" class="msg-error hidden"></p>
+      <p id="settOk" class="msg-success hidden">Settings saved.</p>
+      <div class="modal-ftr">
+        <button class="btn btn-outline" id="cancelSettings">Cancel</button>
+        <button class="btn btn-primary" id="saveSettings">Save Settings</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRINT VIEW ===== -->
+<div id="printView">
+  <div class="pr-wrap">
+    <div class="pr-header">
+      <div class="pr-brand">
+        <div class="pr-brand-icon">KS</div>
+        <div class="pr-brand-text">
+          <h1 id="prRestName"></h1>
+          <p id="prReportTitle">Inventory Report</p>
+        </div>
+      </div>
+      <div class="pr-meta">
+        <div><strong>Report Type:</strong> <span id="prType"></span></div>
+        <div><strong>Period:</strong> <span id="prPeriod"></span></div>
+        <div><strong>Generated:</strong> <span id="prGenerated"></span></div>
+        <div><strong>Chef:</strong> <span id="prChef"></span></div>
+      </div>
+    </div>
+    <div class="pr-summary">
+      <div class="pr-stat s-blue"><span class="pr-stat-val" id="prTotal">0</span><span class="pr-stat-lbl">Total Items</span></div>
+      <div class="pr-stat s-green"><span class="pr-stat-val" id="prFresh">0</span><span class="pr-stat-lbl">Fresh</span></div>
+      <div class="pr-stat s-warn"><span class="pr-stat-val" id="prWarn">0</span><span class="pr-stat-lbl">Expiring Soon</span></div>
+      <div class="pr-stat s-red"><span class="pr-stat-val" id="prExp">0</span><span class="pr-stat-lbl">Expired/Critical</span></div>
+      <div class="pr-stat s-blue"><span class="pr-stat-val" id="prValue">$0</span><span class="pr-stat-lbl">Est. Total Value</span></div>
+    </div>
+    <p class="pr-section-title">Inventory Details</p>
+    <table class="pr-table">
+      <thead>
+        <tr>
+          <th>#</th><th>Item Name</th><th>Category</th><th>Quantity</th>
+          <th>Purchased</th><th>Expires</th><th>Age</th><th>Days Left</th>
+          <th>Status</th><th>Supplier</th><th>Unit Cost</th><th>Total Value</th>
+        </tr>
+      </thead>
+      <tbody id="prBody"></tbody>
+    </table>
+    <div class="pr-footer">
+      <span>KitchenStock &mdash; Kitchen Inventory Management System &mdash; Confidential</span>
+      <span id="prPage">Page 1</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div id="toast" class="toast hidden"><span id="toastMsg"></span></div>
+
+<script>
+'use strict';
+
+// ===== CONSTANTS =====
+const SK_ITEMS   = 'ks_items';
+const SK_SETT    = 'ks_settings';
+const SK_SESSION = 'ks_auth';
+const DEF_PW     = 'chef1234';
+const WARN_DAYS  = 3;
+const CRIT_DAYS  = 1;
+
+// ===== STATE =====
+let items    = [];
+let sett     = { restaurant: 'My Restaurant', chef: 'Head Chef', password: DEF_PW };
+let editId   = null;
+let delId    = null;
+let repPer   = 'week';
+let toastTmr = null;
+let alarmInt = null;
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  loadSettings();
+  if (sessionStorage.getItem(SK_SESSION) === '1') {
+    showApp();
+  }
+  initClock();
+  bindAll();
+});
+
+// ===== AUTH =====
+function showApp() {
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  loadItems();
+  renderAll();
+  startAlarms();
+  applySettingsToUI();
+}
+
+function showLogin() {
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  if (alarmInt) clearInterval(alarmInt);
+}
+
+// ===== SETTINGS =====
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(SK_SETT);
+    if (raw) sett = { ...sett, ...JSON.parse(raw) };
+  } catch {}
+}
+
+function saveSettingsStore() {
+  localStorage.setItem(SK_SETT, JSON.stringify(sett));
+}
+
+function applySettingsToUI() {
+  const name = sett.restaurant || 'KitchenStock';
+  document.getElementById('headerRestaurant').textContent = name;
+}
+
+// ===== STORAGE =====
+function loadItems() {
+  try {
+    const raw = localStorage.getItem(SK_ITEMS);
+    items = raw ? JSON.parse(raw) : seedData();
+    if (!raw) saveItems();
+  } catch { items = []; }
+}
+
+function saveItems() {
+  localStorage.setItem(SK_ITEMS, JSON.stringify(items));
+  const el = document.getElementById('footerTs');
+  if (el) el.textContent = 'Last saved: ' + new Date().toLocaleTimeString();
+}
+
+// ===== EXPORT =====
+function exportData() {
+  const payload = {
+    version: '2.0', app: 'KitchenStock',
+    exportDate: new Date().toISOString(),
+    settings: { restaurant: sett.restaurant, chef: sett.chef },
+    items
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `kitchenstock-backup-${todayStr()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Data exported as JSON file.');
+}
+
+function importData(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.items || !Array.isArray(data.items)) throw new Error('Invalid format');
+      const count = data.items.length;
+      if (!confirm(`Import ${count} items from "${file.name}"?\n\nThis will REPLACE all current inventory data.`)) return;
+      items = data.items;
+      if (data.settings) {
+        sett.restaurant = data.settings.restaurant || sett.restaurant;
+        sett.chef       = data.settings.chef || sett.chef;
+        saveSettingsStore();
+        applySettingsToUI();
+      }
+      saveItems();
+      renderAll();
+      toast(`Imported ${count} items successfully.`);
+    } catch (err) {
+      alert('Import failed: ' + err.message + '\nMake sure you selected a valid KitchenStock JSON backup.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ===== STATUS =====
+function status(item) {
+  const today = todayStr();
+  if (item.expiryDate < today) return 'expired';
+  const d = daysUntil(item.expiryDate);
+  if (d <= CRIT_DAYS) return 'critical';
+  if (d <= WARN_DAYS) return 'warning';
+  return 'fresh';
+}
+
+function daysUntil(ds) {
+  return Math.round((new Date(ds + 'T00:00:00') - new Date(todayStr() + 'T00:00:00')) / 86400000);
+}
+
+function daysSince(ds) {
+  return Math.round((new Date(todayStr() + 'T00:00:00') - new Date(ds + 'T00:00:00')) / 86400000);
+}
+
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+// ===== RENDER =====
+function renderAll() {
+  const filtered = applyFilters();
+  renderStats();
+  renderTable(filtered);
+  renderAlerts();
+}
+
+function renderStats() {
+  const expired = items.filter(i => { const s = status(i); return s==='expired'||s==='critical'; }).length;
+  const warning = items.filter(i => status(i) === 'warning').length;
+  const fresh   = items.filter(i => status(i) === 'fresh').length;
+  set('statTotal',   items.length);
+  set('statFresh',   fresh);
+  set('statWarning', warning);
+  set('statExpired', expired);
+  const badge = expired + warning;
+  const nb = document.getElementById('notifCount');
+  if (badge > 0) { nb.textContent = badge; nb.classList.remove('hidden'); }
+  else nb.classList.add('hidden');
+}
+
+function renderAlerts() {
+  const expired  = items.filter(i => status(i) === 'expired');
+  const critical = items.filter(i => status(i) === 'critical');
+  const banner   = document.getElementById('alertBanner');
+  const content  = document.getElementById('alertContent');
+  const parts    = [];
+  if (expired.length)  parts.push(`<strong>${expired.length} EXPIRED:</strong> ${expired.map(i=>esc(i.name)).join(', ')}`);
+  if (critical.length) parts.push(`<strong>${critical.length} CRITICAL (use today):</strong> ${critical.map(i=>esc(i.name)).join(', ')}`);
+  if (parts.length) {
+    content.innerHTML = parts.join('&ensp;&mdash;&ensp;');
+    banner.classList.remove('hidden');
+  } else {
+    banner.classList.add('hidden');
+  }
+}
+
+function renderTable(filtered) {
+  const tbody = document.getElementById('inventoryBody');
+  const empty = document.getElementById('emptyState');
+  if (!filtered.length) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  tbody.innerHTML = filtered.map(buildRow).join('');
+}
+
+function buildRow(item) {
+  const s    = status(item);
+  const left = daysUntil(item.expiryDate);
+  const age  = daysSince(item.purchaseDate);
+  const rc   = s==='expired' ? 'row-expired' : s==='critical' ? 'row-critical' : s==='warning' ? 'row-warning' : '';
+  const dc   = `days-${s}`;
+  const dl   = s==='expired' ? `${Math.abs(left)}d ago` : left===0 ? 'Today' : `${left}d`;
+  const bl   = {fresh:'Fresh',warning:'Expiring Soon',critical:'Critical',expired:'Expired'}[s];
+  const sup  = item.supplier ? `<span class="item-supplier">${esc(item.supplier)}</span>` : '';
+  const cost = item.cost ? `<span style="color:var(--tx3);font-size:11px;">&nbsp;($${(+item.cost).toFixed(2)}/${esc(item.unit)})</span>` : '';
+  return `<tr class="${rc}" data-id="${item.id}">
+    <td><span class="item-name">${esc(item.name)}</span>${sup}</td>
+    <td><span class="cat-tag">${esc(item.category)}</span></td>
+    <td>${esc(String(item.quantity))} ${esc(item.unit)}${cost}</td>
+    <td>${fmtDate(item.purchaseDate)}</td>
+    <td>${fmtDate(item.expiryDate)}</td>
+    <td style="color:var(--tx3)">${age}d</td>
+    <td class="${dc}">${dl}</td>
+    <td><span class="badge badge-${s}">${bl}</span></td>
+    <td><div class="action-btns">
+      <button class="btn-icon" onclick="openEdit('${item.id}')">Edit</button>
+      <button class="btn-icon btn-icon-del" onclick="openDel('${item.id}')">Del</button>
+    </div></td>
+  </tr>`;
+}
+
+// ===== FILTERS =====
+function applyFilters() {
+  const q  = document.getElementById('searchInput').value.toLowerCase();
+  const cat = document.getElementById('categoryFilter').value;
+  const st  = document.getElementById('statusFilter').value;
+  const so  = document.getElementById('sortBy').value;
+  const ord = {expired:0,critical:1,warning:2,fresh:3};
+
+  let res = items.filter(i => {
+    const ms = !q || i.name.toLowerCase().includes(q) || i.category.toLowerCase().includes(q)
+               || (i.supplier||'').toLowerCase().includes(q);
+    return ms && (cat==='all'||i.category===cat) && (st==='all'||status(i)===st);
+  });
+
+  res.sort((a,b) => {
+    switch(so) {
+      case 'name':     return a.name.localeCompare(b.name);
+      case 'category': return a.category.localeCompare(b.category)||a.name.localeCompare(b.name);
+      case 'purchase': return a.purchaseDate.localeCompare(b.purchaseDate);
+      case 'status':   return (ord[status(a)]||0)-(ord[status(b)]||0)||a.expiryDate.localeCompare(b.expiryDate);
+      default:         return a.expiryDate.localeCompare(b.expiryDate)||a.name.localeCompare(b.name);
+    }
+  });
+  return res;
+}
+
+// ===== ALARMS =====
+function startAlarms() {
+  if (alarmInt) clearInterval(alarmInt);
+  alarmInt = setInterval(() => { renderAlerts(); renderStats(); }, 60000);
+  if (Notification && Notification.permission === 'default') Notification.requestPermission();
+  sendPushIfNeeded();
+}
+
+function sendPushIfNeeded() {
+  const urgent = items.filter(i => { const s=status(i); return s==='expired'||s==='critical'; });
+  if (urgent.length && Notification && Notification.permission === 'granted') {
+    new Notification('KitchenStock Alert', {
+      body: `${urgent.length} item(s) need attention: ${urgent.map(i=>i.name).join(', ')}`,
+      tag: 'ks-alert'
+    });
+  }
+}
+
+// ===== ITEM CRUD =====
+function openAdd() {
+  editId = null;
+  set('modalTitle','Add New Item'); set('saveBtn','Add Item','textContent');
+  clearForm();
+  document.getElementById('fPurchase').value = todayStr();
+  document.getElementById('itemModal').classList.remove('hidden');
+  document.getElementById('fName').focus();
+}
+
+function openEdit(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  editId = id;
+  set('modalTitle','Edit Item'); set('saveBtn','Save Changes','textContent');
+  document.getElementById('fName').value     = item.name;
+  document.getElementById('fCategory').value = item.category;
+  document.getElementById('fQty').value      = item.quantity;
+  document.getElementById('fUnit').value     = item.unit;
+  document.getElementById('fPurchase').value = item.purchaseDate;
+  document.getElementById('fExpiry').value   = item.expiryDate;
+  document.getElementById('fSupplier').value = item.supplier || '';
+  document.getElementById('fCost').value     = item.cost || '';
+  document.getElementById('fNotes').value    = item.notes || '';
+  document.getElementById('formError').classList.add('hidden');
+  document.getElementById('itemModal').classList.remove('hidden');
+  document.getElementById('fName').focus();
+}
+
+function closeItemModal() {
+  document.getElementById('itemModal').classList.add('hidden');
+  clearForm(); editId = null;
+}
+
+function clearForm() {
+  ['fName','fCategory','fQty','fUnit','fPurchase','fExpiry','fSupplier','fCost','fNotes']
+    .forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('formError').classList.add('hidden');
+}
+
+function saveItem(e) {
+  e.preventDefault();
+  const err  = document.getElementById('formError');
+  err.classList.add('hidden');
+  const name  = document.getElementById('fName').value.trim();
+  const cat   = document.getElementById('fCategory').value;
+  const qty   = document.getElementById('fQty').value;
+  const unit  = document.getElementById('fUnit').value;
+  const pur   = document.getElementById('fPurchase').value;
+  const exp   = document.getElementById('fExpiry').value;
+  const sup   = document.getElementById('fSupplier').value.trim();
+  const cost  = document.getElementById('fCost').value;
+  const notes = document.getElementById('fNotes').value.trim();
+
+  if (!name||!cat||!qty||!unit||!pur||!exp) {
+    err.textContent='Please fill in all required fields.'; err.classList.remove('hidden'); return;
+  }
+  if (exp < pur) {
+    err.textContent='Expiry date cannot be before purchase date.'; err.classList.remove('hidden'); return;
+  }
+
+  const d = { name, category:cat, quantity:parseFloat(qty), unit, purchaseDate:pur, expiryDate:exp,
+              supplier:sup, cost:cost?parseFloat(cost):null, notes };
+
+  if (editId) {
+    const idx = items.findIndex(i => i.id === editId);
+    if (idx !== -1) items[idx] = { ...items[idx], ...d };
+    toast(`"${name}" updated.`);
+  } else {
+    items.push({ id:uid(), ...d });
+    toast(`"${name}" added to inventory.`);
+  }
+  saveItems(); renderAll(); closeItemModal(); sendPushIfNeeded();
+}
+
+function openDel(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  delId = id;
+  document.getElementById('delItemName').textContent = item.name;
+  document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function closeDel() {
+  document.getElementById('deleteModal').classList.add('hidden'); delId = null;
+}
+
+function confirmDel() {
+  if (!delId) return;
+  const item = items.find(i => i.id === delId);
+  items = items.filter(i => i.id !== delId);
+  saveItems(); renderAll(); closeDel();
+  if (item) toast(`"${item.name}" removed.`);
+}
+
+// ===== REPORTS =====
+function openReportModal() {
+  document.getElementById('reportModal').classList.remove('hidden');
+  document.getElementById('repType').value = 'current';
+  updateRepPreview();
+}
+
+function closeReportModal() {
+  document.getElementById('reportModal').classList.add('hidden');
+}
+
+function getPeriodDates(per) {
+  const t = new Date(); const ts = todayStr();
+  const fmt = d => d.toISOString().split('T')[0];
+  if (per === 'today') return { start: ts, end: ts, label: 'Today, ' + fmtDate(ts) };
+  if (per === 'week') {
+    const dow = t.getDay(); const mon = new Date(t);
+    mon.setDate(t.getDate() - (dow === 0 ? 6 : dow - 1));
+    const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+    return { start: fmt(mon), end: fmt(sun), label: `This Week (${fmtDate(fmt(mon))} – ${fmtDate(fmt(sun))})` };
+  }
+  if (per === 'month') {
+    const s = new Date(t.getFullYear(), t.getMonth(), 1);
+    const e = new Date(t.getFullYear(), t.getMonth() + 1, 0);
+    return { start: fmt(s), end: fmt(e), label: t.toLocaleString('default',{month:'long',year:'numeric'}) };
+  }
+  if (per === 'quarter') {
+    const q = Math.floor(t.getMonth() / 3);
+    const s = new Date(t.getFullYear(), q * 3, 1);
+    const e = new Date(t.getFullYear(), q * 3 + 3, 0);
+    return { start: fmt(s), end: fmt(e), label: `Q${q+1} ${t.getFullYear()} (${fmtDate(fmt(s))} – ${fmtDate(fmt(e))})` };
+  }
+  if (per === 'half') {
+    const h = t.getMonth() < 6 ? 0 : 1;
+    const s = new Date(t.getFullYear(), h * 6, 1);
+    const e = new Date(t.getFullYear(), h * 6 + 6, 0);
+    return { start: fmt(s), end: fmt(e), label: `H${h+1} ${t.getFullYear()} (${fmtDate(fmt(s))} – ${fmtDate(fmt(e))})` };
+  }
+  if (per === 'year') {
+    const s = new Date(t.getFullYear(), 0, 1);
+    const e = new Date(t.getFullYear(), 11, 31);
+    return { start: fmt(s), end: fmt(e), label: `Full Year ${t.getFullYear()}` };
+  }
+  if (per === 'custom') {
+    const rs = document.getElementById('repStart').value;
+    const re = document.getElementById('repEnd').value;
+    if (!rs || !re) return { start: ts, end: ts, label: 'Custom Range (select dates above)' };
+    return { start: rs, end: re, label: `${fmtDate(rs)} – ${fmtDate(re)}` };
+  }
+  return { start: ts, end: ts, label: 'Today' };
+}
+
+function filterItemsForReport(type, per) {
+  const pd = getPeriodDates(per);
+  if (type === 'current') return { rows: [...items], pd: { ...pd, label: 'Current Inventory (as of today)' } };
+  if (type === 'expiring') return { rows: items.filter(i => i.expiryDate >= pd.start && i.expiryDate <= pd.end), pd };
+  if (type === 'purchased') return { rows: items.filter(i => i.purchaseDate >= pd.start && i.purchaseDate <= pd.end), pd };
+  if (type === 'waste') {
+    const today = todayStr();
+    return { rows: items.filter(i => i.expiryDate < today && i.expiryDate >= pd.start && i.expiryDate <= pd.end),
+             pd: { ...pd, label: pd.label + ' — Waste Report' } };
+  }
+  return { rows: [], pd };
+}
+
+function updateRepPreview() {
+  const type = document.getElementById('repType').value;
+  const per  = repPer;
+  const pSec = document.getElementById('periodSection');
+  const cRan = document.getElementById('customRange');
+  if (type === 'current') {
+    pSec.style.opacity = '0.4';
+    cRan.classList.add('hidden');
+  } else {
+    pSec.style.opacity = '1';
+    cRan.classList.toggle('hidden', per !== 'custom');
+  }
+  const { rows, pd } = filterItemsForReport(type, per);
+  const val = rows.reduce((a, i) => a + (i.cost && i.quantity ? i.cost * i.quantity : 0), 0);
+  document.getElementById('repPreview').innerHTML =
+    `<strong>${rows.length} item(s)</strong> will be included &mdash; Period: <strong>${pd.label}</strong>` +
+    (val > 0 ? ` &mdash; Est. Value: <strong>$${val.toFixed(2)}</strong>` : '');
+}
+
+function generateReport() {
+  const type = document.getElementById('repType').value;
+  const { rows, pd } = filterItemsForReport(type, repPer);
+
+  const typeLabel = {
+    current:'Current Inventory Snapshot', expiring:'Expiring Items Report',
+    purchased:'Purchased Items Report', waste:'Waste / Spoilage Report'
+  }[type] || 'Inventory Report';
+
+  const fresh   = rows.filter(i => status(i)==='fresh').length;
+  const warn    = rows.filter(i => status(i)==='warning').length;
+  const expired = rows.filter(i => { const s=status(i); return s==='expired'||s==='critical'; }).length;
+  const val     = rows.reduce((a,i) => a + (i.cost&&i.quantity ? i.cost*i.quantity : 0), 0);
+
+  set('prRestName',    sett.restaurant || 'KitchenStock');
+  set('prReportTitle', typeLabel);
+  set('prType',        typeLabel);
+  set('prPeriod',      pd.label);
+  set('prGenerated',   new Date().toLocaleString());
+  set('prChef',        sett.chef || 'Head Chef');
+  set('prTotal',       rows.length);
+  set('prFresh',       fresh);
+  set('prWarn',        warn);
+  set('prExp',         expired);
+  set('prValue',       val > 0 ? '$' + val.toFixed(2) : 'N/A');
+
+  const sorted = [...rows].sort((a,b) => {
+    const ord = {expired:0,critical:1,warning:2,fresh:3};
+    return (ord[status(a)]||0)-(ord[status(b)]||0)||a.expiryDate.localeCompare(b.expiryDate);
+  });
+
+  document.getElementById('prBody').innerHTML = sorted.map((item, idx) => {
+    const s    = status(item);
+    const left = daysUntil(item.expiryDate);
+    const age  = daysSince(item.purchaseDate);
+    const dl   = s==='expired' ? `${Math.abs(left)}d ago` : left===0 ? 'Today' : `${left}d`;
+    const sc   = `ps-${s}`;
+    const sl   = {fresh:'Fresh',warning:'Expiring Soon',critical:'Critical',expired:'EXPIRED'}[s];
+    const tv   = item.cost && item.quantity ? '$'+(item.cost*item.quantity).toFixed(2) : '—';
+    const uc   = item.cost ? '$'+parseFloat(item.cost).toFixed(2) : '—';
+    return `<tr>
+      <td>${idx+1}</td>
+      <td><strong>${esc(item.name)}</strong>${item.notes?`<br><span style="font-size:9px;color:#64748b">${esc(item.notes)}</span>`:''}</td>
+      <td>${esc(item.category)}</td>
+      <td>${esc(String(item.quantity))} ${esc(item.unit)}</td>
+      <td>${fmtDate(item.purchaseDate)}</td>
+      <td>${fmtDate(item.expiryDate)}</td>
+      <td>${age}d</td>
+      <td>${dl}</td>
+      <td class="${sc}">${sl}</td>
+      <td>${esc(item.supplier||'—')}</td>
+      <td>${uc}</td>
+      <td>${tv}</td>
+    </tr>`;
+  }).join('');
+
+  closeReportModal();
+  setTimeout(() => window.print(), 150);
+}
+
+// ===== SETTINGS MODAL =====
+function openSettingsModal() {
+  document.getElementById('sRestaurant').value = sett.restaurant || '';
+  document.getElementById('sChef').value       = sett.chef || '';
+  document.getElementById('sOldPw').value      = '';
+  document.getElementById('sNewPw').value      = '';
+  document.getElementById('sConfPw').value     = '';
+  document.getElementById('settErr').classList.add('hidden');
+  document.getElementById('settOk').classList.add('hidden');
+  document.getElementById('settingsModal').classList.remove('hidden');
+}
+
+function closeSettingsModal() {
+  document.getElementById('settingsModal').classList.add('hidden');
+}
+
+function doSaveSettings() {
+  const err  = document.getElementById('settErr');
+  const ok   = document.getElementById('settOk');
+  err.classList.add('hidden'); ok.classList.add('hidden');
+
+  sett.restaurant = document.getElementById('sRestaurant').value.trim();
+  sett.chef       = document.getElementById('sChef').value.trim();
+
+  const oldPw  = document.getElementById('sOldPw').value;
+  const newPw  = document.getElementById('sNewPw').value;
+  const confPw = document.getElementById('sConfPw').value;
+
+  if (newPw || oldPw) {
+    if (oldPw !== sett.password) {
+      err.textContent = 'Current password is incorrect.'; err.classList.remove('hidden'); return;
+    }
+    if (newPw.length < 6) {
+      err.textContent = 'New password must be at least 6 characters.'; err.classList.remove('hidden'); return;
+    }
+    if (newPw !== confPw) {
+      err.textContent = 'Passwords do not match.'; err.classList.remove('hidden'); return;
+    }
+    sett.password = newPw;
+  }
+
+  saveSettingsStore();
+  applySettingsToUI();
+  ok.classList.remove('hidden');
+  toast('Settings saved.');
+}
+
+// ===== CLOCK =====
+function initClock() {
+  const el = document.getElementById('clock');
+  const tick = () => {
+    const n = new Date();
+    el.textContent = n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})
+      + '  ' + n.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  };
+  tick(); setInterval(tick, 1000);
+}
+
+// ===== SEED DATA =====
+function seedData() {
+  const d = offset => {
+    const dt = new Date(); dt.setDate(dt.getDate() + offset);
+    return dt.toISOString().split('T')[0];
+  };
+  return [
+    {id:uid(),name:'Roma Tomatoes',    category:'Produce',  quantity:8,   unit:'kg',      purchaseDate:d(-2), expiryDate:d(2),   supplier:'Local Farm',   cost:3.50,  notes:''},
+    {id:uid(),name:'Chicken Breast',   category:'Meat',     quantity:12,  unit:'kg',      purchaseDate:d(-1), expiryDate:d(1),   supplier:'Metro Meats',  cost:8.00,  notes:'Keep at 0-2°C'},
+    {id:uid(),name:'Whole Milk',        category:'Dairy',    quantity:20,  unit:'liters',  purchaseDate:d(-3), expiryDate:d(4),   supplier:'Dairy Co',     cost:1.20,  notes:''},
+    {id:uid(),name:'Atlantic Salmon',   category:'Seafood',  quantity:6,   unit:'kg',      purchaseDate:d(0),  expiryDate:d(0),   supplier:'Fish Market',  cost:22.00, notes:'USE TODAY'},
+    {id:uid(),name:'Parmesan Cheese',   category:'Dairy',    quantity:3,   unit:'kg',      purchaseDate:d(-8), expiryDate:d(-1),  supplier:'Cheese House', cost:18.00, notes:''},
+    {id:uid(),name:'Extra Virgin Olive Oil',category:'Dry Goods',quantity:12,unit:'liters',purchaseDate:d(-30),expiryDate:d(335), supplier:'Import Co',    cost:9.00,  notes:''},
+    {id:uid(),name:'Beef Tenderloin',   category:'Meat',     quantity:10,  unit:'kg',      purchaseDate:d(0),  expiryDate:d(3),   supplier:'Prime Cuts',   cost:35.00, notes:'Premium cut'},
+    {id:uid(),name:'Heavy Cream',       category:'Dairy',    quantity:8,   unit:'liters',  purchaseDate:d(-1), expiryDate:d(2),   supplier:'Dairy Co',     cost:4.50,  notes:''},
+    {id:uid(),name:'Fresh Basil',       category:'Produce',  quantity:500, unit:'g',       purchaseDate:d(-1), expiryDate:d(3),   supplier:'Herb Garden',  cost:6.00,  notes:'Keep moist'},
+    {id:uid(),name:'Chardonnay Wine',   category:'Beverages',quantity:6,   unit:'bottles', purchaseDate:d(-15),expiryDate:d(350), supplier:'Wine Cellar',  cost:25.00, notes:'For cooking'},
+  ];
+}
+
+// ===== EVENT BINDING =====
+function bindAll() {
+  // Login
+  const pwIn = document.getElementById('passwordInput');
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+  pwIn.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+  document.getElementById('togglePassword').addEventListener('click', () => {
+    const t = pwIn.type === 'text'; pwIn.type = t ? 'password' : 'text';
+  });
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem(SK_SESSION); showLogin();
+  });
+
+  // Item CRUD
+  document.getElementById('addItemBtn').addEventListener('click', openAdd);
+  document.getElementById('closeModal').addEventListener('click', closeItemModal);
+  document.getElementById('cancelModal').addEventListener('click', closeItemModal);
+  document.getElementById('itemModal').addEventListener('click', e => { if(e.target.id==='itemModal') closeItemModal(); });
+  document.getElementById('itemForm').addEventListener('submit', saveItem);
+
+  // Delete
+  document.getElementById('cancelDelete').addEventListener('click', closeDel);
+  document.getElementById('confirmDelete').addEventListener('click', confirmDel);
+  document.getElementById('deleteModal').addEventListener('click', e => { if(e.target.id==='deleteModal') closeDel(); });
+
+  // Filters
+  ['searchInput','categoryFilter','statusFilter','sortBy'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderAll);
+  });
+
+  // Alerts
+  document.getElementById('dismissAlert').addEventListener('click', () => {
+    document.getElementById('alertBanner').classList.add('hidden');
+  });
+  document.getElementById('notifBell').addEventListener('click', () => {
+    document.getElementById('alertBanner').classList.toggle('hidden');
+    renderAlerts();
+  });
+
+  // Export / Import
+  document.getElementById('exportBtn').addEventListener('click', exportData);
+  document.getElementById('importTrigger').addEventListener('click', () => {
+    document.getElementById('importFile').click();
+  });
+  document.getElementById('importFile').addEventListener('change', e => {
+    importData(e.target.files[0]);
+    e.target.value = '';
+  });
+
+  // Reports
+  document.getElementById('openReportBtn').addEventListener('click', openReportModal);
+  document.getElementById('closeReport').addEventListener('click', closeReportModal);
+  document.getElementById('cancelReport').addEventListener('click', closeReportModal);
+  document.getElementById('reportModal').addEventListener('click', e => { if(e.target.id==='reportModal') closeReportModal(); });
+  document.getElementById('repType').addEventListener('change', updateRepPreview);
+  document.getElementById('genReportBtn').addEventListener('click', generateReport);
+  document.getElementById('repStart').addEventListener('change', updateRepPreview);
+  document.getElementById('repEnd').addEventListener('change', updateRepPreview);
+
+  document.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      repPer = btn.dataset.p;
+      document.getElementById('customRange').classList.toggle('hidden', repPer !== 'custom');
+      updateRepPreview();
+    });
+  });
+
+  // Settings
+  document.getElementById('openSettingsBtn').addEventListener('click', openSettingsModal);
+  document.getElementById('closeSettings').addEventListener('click', closeSettingsModal);
+  document.getElementById('cancelSettings').addEventListener('click', closeSettingsModal);
+  document.getElementById('settingsModal').addEventListener('click', e => { if(e.target.id==='settingsModal') closeSettingsModal(); });
+  document.getElementById('saveSettings').addEventListener('click', doSaveSettings);
+}
+
+function doLogin() {
+  const pw  = document.getElementById('passwordInput').value;
+  const err = document.getElementById('loginError');
+  err.classList.add('hidden');
+  if (pw === sett.password) {
+    sessionStorage.setItem(SK_SESSION, '1');
+    document.getElementById('passwordInput').value = '';
+    showApp();
+  } else {
+    err.classList.remove('hidden');
+    document.getElementById('passwordInput').select();
+  }
+}
+
+// ===== HELPERS =====
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtDate(ds) {
+  if (!ds) return '—';
+  const [y,m,d] = ds.split('-');
+  return `${parseInt(d)} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]} ${y}`;
+}
+function set(id, val, prop='textContent') { const el=document.getElementById(id); if(el) el[prop]=val; }
+function toast(msg) {
+  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toast').classList.remove('hidden');
+  if (toastTmr) clearTimeout(toastTmr);
+  toastTmr = setTimeout(() => document.getElementById('toast').classList.add('hidden'), 3200);
+}
+</script>
+</body>
+</html>
