@@ -57,7 +57,7 @@ textarea{resize:vertical;min-height:64px}
 .btn-sm{padding:6px 12px;font-size:13px}
 
 /* HEADER */
-.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
 .header-left{display:flex;align-items:center;gap:12px}
 .header-title{display:flex;flex-direction:column}
 .header-name{font-size:16px;font-weight:700;letter-spacing:-.3px}
@@ -145,6 +145,7 @@ textarea{resize:vertical;min-height:64px}
 .action-btns{display:flex;gap:6px}
 .btn-icon{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--tx2);cursor:pointer;font-size:12px;padding:5px 10px;font-family:var(--font);font-weight:600;transition:background .2s,color .2s,border-color .2s}
 .btn-icon:hover{background:var(--border);color:var(--tx)}
+.btn-icon-restock:hover{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
 .btn-icon-arch:hover{background:var(--yellow-bg);color:var(--yellow);border-color:var(--yellow)}
 .btn-icon-del:hover{background:var(--red-bg);color:var(--red);border-color:var(--red)}
 .btn-icon-restore:hover{background:var(--green-bg);color:var(--green);border-color:var(--green)}
@@ -202,13 +203,12 @@ textarea{resize:vertical;min-height:64px}
 
 /* MOBILE DRAWER */
 .mob-menu-btn{display:none;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer;color:var(--tx);align-items:center;justify-content:center;flex-shrink:0}
-.mob-drawer{position:fixed;inset:0;z-index:300;pointer-events:none}
-.mob-drawer.open{pointer-events:all}
-.mob-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
-.mob-drawer.open .mob-backdrop{opacity:1}
-.mob-panel{position:absolute;top:60px;right:0;width:200px;background:var(--bg2);border-left:1px solid var(--border);border-bottom:1px solid var(--border);border-bottom-left-radius:var(--radius);padding:10px;display:flex;flex-direction:column;gap:6px;transform:translateX(100%);transition:transform .25s}
-.mob-drawer.open .mob-panel{transform:translateX(0)}
-.mob-panel .hdr-btn{width:100%;text-align:left;padding:10px 14px}
+.mob-drawer{position:fixed;inset:0;z-index:150;pointer-events:none}
+.mob-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .25s;pointer-events:none}
+.mob-panel{position:absolute;top:0;right:0;bottom:0;width:220px;background:var(--bg2);border-left:1px solid var(--border);padding:62px 10px 24px;display:flex;flex-direction:column;gap:6px;overflow-y:auto;transform:translateX(100%);transition:transform .28s ease;pointer-events:none}
+.mob-drawer.open .mob-backdrop{opacity:1;pointer-events:all}
+.mob-drawer.open .mob-panel{transform:translateX(0);pointer-events:all}
+.mob-panel .hdr-btn{width:100%;text-align:left;padding:12px 14px;font-size:14px}
 
 @media(max-width:960px){
   .stats-grid{grid-template-columns:repeat(2,1fr)}
@@ -938,6 +938,7 @@ function buildRow(item) {
     <td><span class="badge badge-${s}">${bl}</span></td>
     <td><div class="action-btns">
       <button class="btn-icon" onclick="openEdit('${item.id}')">Edit</button>
+      <button class="btn-icon btn-icon-restock" onclick="openRestock('${item.id}')">Restock</button>
       <button class="btn-icon btn-icon-arch" onclick="openArch('${item.id}')">Archive</button>
     </div></td>
   </tr>`;
@@ -1013,6 +1014,24 @@ function openEdit(id) {
   document.getElementById('formError').classList.add('hidden');
   document.getElementById('itemModal').classList.remove('hidden');
   document.getElementById('fName').focus();
+}
+
+function openRestock(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  editId = null;
+  set('modalTitle', 'Restock — ' + item.name);
+  set('saveBtn', 'Add New Batch', 'textContent');
+  clearForm();
+  document.getElementById('fName').value     = item.name;
+  document.getElementById('fCategory').value = item.category;
+  document.getElementById('fUnit').value     = item.unit;
+  document.getElementById('fPurchase').value = todayStr();
+  document.getElementById('fSupplier').value = item.supplier || '';
+  document.getElementById('fCost').value     = item.cost || '';
+  document.getElementById('fNotes').value    = item.notes || '';
+  document.getElementById('itemModal').classList.remove('hidden');
+  document.getElementById('fQty').focus();
 }
 
 function closeItemModal() { document.getElementById('itemModal').classList.add('hidden'); clearForm(); editId = null; }
