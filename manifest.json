@@ -1,0 +1,25 @@
+{
+  "name": "KitchenStock",
+  "short_name": "KitchenStock",
+  "description": "Kitchen Inventory Management for Head Chefs",
+  "start_url": "inventory.html",
+  "scope": "/kitchenstock/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KitchenStock — Kitchen Inventory</title>
+<meta name="description" content="Kitchen Inventory Management for Head Chefs">
+<meta name="theme-color" content="#10b981">
+<!-- PWA: install as app on iOS and Android -->
+<link rel="manifest" href="manifest.json">
+<!-- iOS home screen support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KitchenStock">
+<link rel="apple-touch-icon" href="icon.svg">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -1459,6 +1468,13 @@ function toast(msg) {
   document.getElementById('toast').classList.remove('hidden');
   if(toastTmr) clearTimeout(toastTmr);
   toastTmr=setTimeout(()=>document.getElementById('toast').classList.add('hidden'),3200);
+}
+
+// Register service worker for offline support and PWA install
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
 }
 </script>
 </body>
